@@ -14,7 +14,7 @@ const Navbar = () => {
         <NavLink to="/applied-jobs">Applied Jobs</NavLink>
       </li>
       <li>
-        <NavLink to="/add-job">Add A Job</NavLink>
+        <NavLink to="/add-a-job">Add A Job</NavLink>
       </li>
       <li>
         <NavLink to="/my-jobs">My Jobs</NavLink>
@@ -25,7 +25,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-300 fixed">
+    <div className="navbar bg-base-300">
       {/* Navbar start */}
       <div className="navbar-start">
         <div className="dropdown">

@@ -6,9 +6,9 @@ const Base = () => {
   return (
     <>
       <Navbar></Navbar>
-      <div className="pt-16">
-        <Outlet></Outlet>
-      </div>
+
+      <Outlet></Outlet>
+
       <Footer></Footer>
     </>
   );
