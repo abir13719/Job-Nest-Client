@@ -1,20 +1,20 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <div className="bg-base-300 flex flex-col-reverse md:flex-col">
       <footer className="footer grid-cols-2 md:grid-cols-4 container mx-auto px-8 md:px-0 py-10 text-base-content">
         <nav>
-          <h6 className="footer-title">Services</h6>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
-        </nav>
-        <nav>
-          <h6 className="footer-title">Company</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <h6 className="footer-title">Explore</h6>
+          <Link to="/" className="link link-hover">
+            Home
+          </Link>
+          <Link to="/blogs" className="link link-hover">
+            Blogs
+          </Link>
+          <Link to="/all-jobs" className="link link-hover">
+            All Jobs
+          </Link>
         </nav>
         <nav>
           <h6 className="footer-title">Legal</h6>
@@ -23,14 +23,23 @@ const Footer = () => {
           <a className="link link-hover">Cookie policy</a>
         </nav>
         <nav>
-          <h6 className="footer-title">Explore</h6>
-          <a className="link link-hover">Features</a>
-          <a className="link link-hover">Enterprise</a>
-          <a className="link link-hover">Security</a>
-          <a className="link link-hover">Pricing</a>
+          <h6 className="footer-title">Contact Us</h6>
+          <p>Phone: +123 456 7890</p>
+          <p>Email: info@jobnest.com</p>
+          <p>Monday - Friday, 9:00 AM - 5:00 PM</p>
+          <p>
+            For inquiries and support, <br /> please feel free to contact us.
+          </p>
+        </nav>
+        <nav>
+          <h6 className="footer-title">Our Address</h6>
+          <p>123 Main Street</p>
+          <p>Suite 101</p>
+          <p>Savar, Dhaka, 1344</p>
+          <p>Bangladesh</p>
         </nav>
       </footer>
-      <footer className="footer gap-2 container mx-auto px-6 md:px-0 py-4 border-t  text-base-content border-base-300">
+      <footer className="footer gap-2 container mx-auto px-6 md:px-0 py-4 border-t  text-base-content border-base-100">
         <aside className="items-center grid-flow-col">
           <img className="h-20 w-20 object-cover ml-[-10px]" src="/public/logo.png" />
           <div>
@@ -76,6 +85,8 @@ const Footer = () => {
           </div>
         </nav>
       </footer>
+
+      <p className="text-center mb-5">Copyright © 2024 - All right reserved</p>
     </div>
   );
 };
