@@ -1,7 +1,21 @@
 import { Link, NavLink } from "react-router-dom";
 import DarkMode from "./DarkMode/DarkMode";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
+  const { logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        console.log("log out");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const navLinks = (
     <>
       <li>
@@ -88,7 +102,7 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button onClick={handleLogOut}>Log Out</button>
             </li>
           </ul>
         </div>

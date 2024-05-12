@@ -1,7 +1,39 @@
+import { useContext, useState } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
+  const { LoginUser } = useContext(AuthContext);
+  const [logInProblem, setLogInProblem] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // getting form input values
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // reseting problem state
+    setLogInProblem("");
+
+    // logging in user
+    LoginUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+
+        // navigating to home page
+        navigate("/");
+
+        // reseting form inputs
+        e.target.reset();
+      })
+      .catch((error) => {
+        setLogInProblem(error.message.split("Error")[1].replace(/[()-.]/g, " "));
+      });
+  };
   return (
     <div className="py-1 md:py-10">
       <div className="h-full md:h-[560px] container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
@@ -26,7 +58,7 @@ const Login = () => {
 
         {/* Form div */}
         <div className="col-span-12 md:col-span-7 p-5 lg:p-16">
-          <form className="grid grid-cols-2 gap-3 h-full">
+          <form onSubmit={handleLogin} className="grid grid-cols-2 gap-3 h-full">
             <h1 className="text-4xl md:text-5xl font-bold col-span-2 text-pink-600">Login</h1>
 
             <div className="col-span-2 space-y-1">
@@ -54,7 +86,9 @@ const Login = () => {
                 placeholder="Your Password"
               />
             </div>
-
+            <div className="col-span-2">
+              {logInProblem && <p className="text-pink-700 font-medium">{logInProblem}</p>}
+            </div>
             <div className="col-span-2">
               <input
                 className="w-full h-14 md:h-16 btn text-base bg-pink-700 hover:bg-pink-600 text-violet-200 rounded-none"
