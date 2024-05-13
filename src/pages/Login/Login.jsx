@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
-  const { LoginUser, LoginWithGoogle } = useContext(AuthContext);
+  const { LoginUser, LoginWithGoogle, LoginWithGitHub } = useContext(AuthContext);
   const [logInProblem, setLogInProblem] = useState("");
   const navigate = useNavigate();
 
@@ -44,7 +44,23 @@ const Login = () => {
         // navigating to home page
         navigate("/");
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // logging in user with github account
+  const handleGithubLogin = () => {
+    LoginWithGitHub()
+      .then((result) => {
+        console.log("Logged in user with Github", result.user);
+
+        // navigating to home page
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <div className="py-1 md:py-10">
@@ -118,7 +134,10 @@ const Login = () => {
                 <FaGoogle />
                 Google
               </div>
-              <div className="flex gap-2 items-center border-2 p-3 md:p-5 cursor-pointer border-pink-700">
+              <div
+                onClick={handleGithubLogin}
+                className="flex gap-2 items-center border-2 p-3 md:p-5 cursor-pointer border-pink-700"
+              >
                 <FaGithub />
                 Github
               </div>
