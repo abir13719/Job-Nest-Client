@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
-  const { LoginUser } = useContext(AuthContext);
+  const { LoginUser, LoginWithGoogle } = useContext(AuthContext);
   const [logInProblem, setLogInProblem] = useState("");
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const Login = () => {
     // logging in user
     LoginUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        console.log("Logged in user with Email", result.user);
 
         // navigating to home page
         navigate("/");
@@ -34,6 +34,18 @@ const Login = () => {
         setLogInProblem(error.message.split("Error")[1].replace(/[()-.]/g, " "));
       });
   };
+
+  // logging in user with google account
+  const handleGoogleLogin = () => {
+    LoginWithGoogle()
+      .then((result) => {
+        console.log("Logged in user with Google", result.user);
+
+        // navigating to home page
+        navigate("/");
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <div className="py-1 md:py-10">
       <div className="h-full md:h-[560px] container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
@@ -44,12 +56,12 @@ const Login = () => {
               Access to <br />
               Exclusive Job
             </h3>
-            <p className="p-10 text-lg md:text-xl  max-w-md text-center text-violet-200">
+            <p className="p-10 text-lg md:text-xl  max-w-md text-center text-violet-100">
               Registered users can save job listings and track their application progress directly
               on the platform.
             </p>
             <Link to="/registration">
-              <button className="btn h-full md:h-14 border-none rounded-none w-32 text-base text-violet-200 bg-pink-800 hover:bg-pink-700">
+              <button className="btn h-full md:h-14 border-none rounded-none w-32 text-base text-violet-100 bg-pink-800 hover:bg-pink-700">
                 Registration
               </button>
             </Link>
@@ -91,7 +103,7 @@ const Login = () => {
             </div>
             <div className="col-span-2">
               <input
-                className="w-full h-14 md:h-16 btn text-base bg-pink-700 hover:bg-pink-600 text-violet-200 rounded-none"
+                className="w-full h-14 md:h-16 btn text-base bg-pink-700 hover:bg-pink-600 text-violet-100 rounded-none"
                 type="submit"
                 value="Login"
               />
@@ -99,7 +111,10 @@ const Login = () => {
 
             <div className="grid grid-cols-2 gap-2 items-center justify-center col-span-2">
               <p className="col-span-2 text-center">or Login with</p>
-              <div className="flex gap-2 items-center border-2 p-3 md:p-5 cursor-pointer border-pink-700">
+              <div
+                onClick={handleGoogleLogin}
+                className="flex gap-2 items-center border-2 p-3 md:p-5 cursor-pointer border-pink-700"
+              >
                 <FaGoogle />
                 Google
               </div>

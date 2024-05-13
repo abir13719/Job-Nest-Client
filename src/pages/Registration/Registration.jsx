@@ -70,12 +70,12 @@ const Registration = () => {
               Access to <br />
               Exclusive Job
             </h3>
-            <p className="p-10 text-lg md:text-xl  max-w-md text-center text-violet-200">
+            <p className="p-10 text-lg md:text-xl  max-w-md text-center text-violet-100">
               Registered users can save job listings and track their application progress directly
               on the platform.
             </p>
             <Link to="/login">
-              <button className="btn h-full md:h-14 border-none rounded-none w-32 text-base text-violet-200 bg-pink-800 hover:bg-pink-700">
+              <button className="btn h-full md:h-14 border-none rounded-none w-32 text-base text-violet-100 bg-pink-800 hover:bg-pink-700">
                 Login
               </button>
             </Link>
@@ -158,7 +158,7 @@ const Registration = () => {
 
             <div className="col-span-2">
               <input
-                className="w-full h-14 md:h-16 btn text-base bg-pink-700 hover:bg-pink-600 text-violet-200 rounded-none"
+                className="w-full h-14 md:h-16 btn text-base bg-pink-700 hover:bg-pink-600 text-violet-100 rounded-none"
                 type="submit"
                 value="Register"
               />
