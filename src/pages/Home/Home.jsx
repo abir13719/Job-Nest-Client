@@ -1,13 +1,11 @@
-import FeatureJobs from "../../components/FeatureJobs/FeatureJobs";
 import Slider from "../../components/Slider/Slider";
+import JobTabs from "../../components/Tabs/JobTabs";
 
 const Home = () => {
   return (
-    <div className="">
-      <div className="">
-        <Slider></Slider>
-        <FeatureJobs></FeatureJobs>
-      </div>
+    <div>
+      <Slider></Slider>
+      <JobTabs></JobTabs>
     </div>
   );
 };

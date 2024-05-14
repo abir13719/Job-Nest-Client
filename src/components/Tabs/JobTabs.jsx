@@ -5,13 +5,14 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { Container } from "@mui/material";
-import JobCard from "../FeatureJobs/JobCard";
+import userImg from "../../assets/user.png";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
+      className="container mx-auto"
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -19,7 +20,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Container>
+        <Container maxWidth={false} disableGutters>
           <Box>{children}</Box>
         </Container>
       )}
@@ -52,14 +53,14 @@ export default function JobTabs() {
       setJob(data.data);
     });
   }, []);
-
+  console.log(jobs);
   const onSiteJobs = jobs.filter((job) => job.category === "On Site");
   const RemoteJobs = jobs.filter((job) => job.category === "Remote");
   const HybridJobs = jobs.filter((job) => job.category === "Hybrid");
   const PartTimeJobs = jobs.filter((job) => job.category === "Part-Time");
 
   return (
-    <div className="">
+    <div>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -78,66 +79,161 @@ export default function JobTabs() {
         </Box>
         {/* All Jobs */}
         <CustomTabPanel value={value} index={0}>
-          <div>
-            {jobs.map((job) => {
-              return (
-                <div key={job._id}>
-                  <JobCard job={job}></JobCard>
+          <div className="grid grid-cols-2 gap-2 py-5">
+            {jobs.map((job) => (
+              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+                <div className="flex gap-3 items-center justify-between ">
+                  <div className="flex gap-3 items-center">
+                    <div className="border rounded-full h-10 w-10 overflow-hidden">
+                      <img className="h-10 w-10" src={userImg} />
+                    </div>
+                    <div>
+                      <p>{job?.postBy}</p>
+                      <p>Post: {job?.postingDate}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Applied: {job?.applicantsNumber}</p>
+                    <p>Deadline: {job?.applicationDeadline}</p>
+                  </div>
                 </div>
-              );
-            })}
+                <div>
+                  <h2 className="text-4xl">{job.title}</h2>
+                  <p>Salary Range: {job?.salaryRange}</p>
+                </div>
+                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  View Details
+                </button>
+              </div>
+            ))}
           </div>
         </CustomTabPanel>
 
         {/* OnSite Jobs */}
         <CustomTabPanel value={value} index={1}>
-          <div>
-            {onSiteJobs.map((job) => {
-              return (
-                <div key={job._id}>
-                  <h1>{job.title}</h1>
+          <div className="grid grid-cols-2 gap-2 py-5">
+            {onSiteJobs.map((job) => (
+              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+                <div className="flex gap-3 items-center justify-between ">
+                  <div className="flex gap-3 items-center">
+                    <div className="border rounded-full h-10 w-10 overflow-hidden">
+                      <img className="h-10 w-10" src={userImg} />
+                    </div>
+                    <div>
+                      <p>{job?.postBy}</p>
+                      <p>Post: {job?.postingDate}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Applied: {job?.applicantsNumber}</p>
+                    <p>Deadline: {job?.applicationDeadline}</p>
+                  </div>
                 </div>
-              );
-            })}
+                <div>
+                  <h2 className="text-4xl">{job.title}</h2>
+                  <p>Salary Range: {job?.salaryRange}</p>
+                </div>
+                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  View Details
+                </button>
+              </div>
+            ))}
           </div>
         </CustomTabPanel>
 
         {/* Remote Jobs */}
         <CustomTabPanel value={value} index={2}>
-          <div>
-            {RemoteJobs.map((job) => {
-              return (
-                <div key={job._id}>
-                  <h1>{job.title}</h1>
+          <div className="grid grid-cols-2 gap-2 py-5">
+            {RemoteJobs.map((job) => (
+              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+                <div className="flex gap-3 items-center justify-between ">
+                  <div className="flex gap-3 items-center">
+                    <div className="border rounded-full h-10 w-10 overflow-hidden">
+                      <img className="h-10 w-10" src={userImg} />
+                    </div>
+                    <div>
+                      <p>{job?.postBy}</p>
+                      <p>Post: {job?.postingDate}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Applied: {job?.applicantsNumber}</p>
+                    <p>Deadline: {job?.applicationDeadline}</p>
+                  </div>
                 </div>
-              );
-            })}
+                <div>
+                  <h2 className="text-4xl">{job.title}</h2>
+                  <p>Salary Range: {job?.salaryRange}</p>
+                </div>
+                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  View Details
+                </button>
+              </div>
+            ))}
           </div>
         </CustomTabPanel>
 
         {/* Hybrid Jobs */}
         <CustomTabPanel value={value} index={3}>
-          <div>
-            {HybridJobs.map((job) => {
-              return (
-                <div key={job._id}>
-                  <h1>{job.title}</h1>
+          <div className="grid grid-cols-2 gap-2 py-5">
+            {HybridJobs.map((job) => (
+              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+                <div className="flex gap-3 items-center justify-between ">
+                  <div className="flex gap-3 items-center">
+                    <div className="border rounded-full h-10 w-10 overflow-hidden">
+                      <img className="h-10 w-10" src={userImg} />
+                    </div>
+                    <div>
+                      <p>{job?.postBy}</p>
+                      <p>Post: {job?.postingDate}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Applied: {job?.applicantsNumber}</p>
+                    <p>Deadline: {job?.applicationDeadline}</p>
+                  </div>
                 </div>
-              );
-            })}
+                <div>
+                  <h2 className="text-4xl">{job.title}</h2>
+                  <p>Salary Range: {job?.salaryRange}</p>
+                </div>
+                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  View Details
+                </button>
+              </div>
+            ))}
           </div>
         </CustomTabPanel>
 
         {/* Part Time Jobs */}
         <CustomTabPanel value={value} index={4}>
-          <div>
-            {PartTimeJobs.map((job) => {
-              return (
-                <div key={job._id}>
-                  <h1>{job.title}</h1>
+          <div className="grid grid-cols-2 gap-2 py-5">
+            {PartTimeJobs.map((job) => (
+              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+                <div className="flex gap-3 items-center justify-between ">
+                  <div className="flex gap-3 items-center">
+                    <div className="border rounded-full h-10 w-10 overflow-hidden">
+                      <img className="h-10 w-10" src={userImg} />
+                    </div>
+                    <div>
+                      <p>{job?.postBy}</p>
+                      <p>Post: {job?.postingDate}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Applied: {job?.applicantsNumber}</p>
+                    <p>Deadline: {job?.applicationDeadline}</p>
+                  </div>
                 </div>
-              );
-            })}
+                <div>
+                  <h2 className="text-4xl">{job.title}</h2>
+                  <p>Salary Range: {job?.salaryRange}</p>
+                </div>
+                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  View Details
+                </button>
+              </div>
+            ))}
           </div>
         </CustomTabPanel>
       </Box>
