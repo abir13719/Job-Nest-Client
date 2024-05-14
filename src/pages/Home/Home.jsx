@@ -1,8 +1,12 @@
+import FeatureJobs from "../../components/FeatureJobs/FeatureJobs";
+import Slider from "../../components/Slider/Slider";
+
 const Home = () => {
   return (
-    <div className="pt-5">
-      <div className="container mx-auto">
-        <h1>This is home</h1>
+    <div className="">
+      <div className="">
+        <Slider></Slider>
+        <FeatureJobs></FeatureJobs>
       </div>
     </div>
   );

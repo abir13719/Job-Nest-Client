@@ -68,7 +68,7 @@ const Login = () => {
         {/* Image div */}
         <div className="col-span-12 md:col-span-5 sideBg">
           <div className="h-full flex flex-col items-center justify-center p-5">
-            <h3 className="text-4xl md:text-5xl lg:text-6xl text-center font-extrabold text-violet-300">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl text-center font-extrabold text-violet-100">
               Access to <br />
               Exclusive Job
             </h3>

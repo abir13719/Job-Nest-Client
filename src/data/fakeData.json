@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "image": "https://i.ibb.co/5cjgk9S/slider-1.jpg",
+    "title": "Find Your Dream Job",
+    "description": "Discover thousands of job opportunities from top companies around the world."
+  },
+  {
+    "id": 2,
+    "image": "https://i.ibb.co/M8K7vN4/slider-2.jpg",
+    "title": "Personalized Recommendations",
+    "description": "Get personalized job recommendations based on your skills, experience, and preferences."
+  },
+  {
+    "id": 3,
+    "image": "https://i.ibb.co/7GTKXjp/slider-3.jpg",
+    "title": "Stay Organized",
+    "description": "Track your job applications, save favorite listings, and receive timely notifications."
+  }
+]

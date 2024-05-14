@@ -1,0 +1,124 @@
+[
+  {
+    "pictureUrl": "/images/job1.jpg",
+    "title": "Frontend Developer",
+    "category": "Remote",
+    "salaryRange": "$60,000 - $80,000",
+    "description": "We are looking for a talented Frontend Developer to join our remote team. The ideal candidate will have experience with React.js, JavaScript, HTML, and CSS.",
+    "postingDate": "2024-05-10",
+    "applicationDeadline": "2024-06-10",
+    "applicantsNumber": 35
+  },
+  {
+    "pictureUrl": "/images/job5.jpg",
+    "title": "UX Designer",
+    "category": "Remote",
+    "salaryRange": "$70,000 - $90,000",
+    "description": "Join our remote team as a UX Designer and help create intuitive and engaging user experiences for our products.",
+    "postingDate": "2024-05-12",
+    "applicationDeadline": "2024-06-12",
+    "applicantsNumber": 28
+  },
+  {
+    "pictureUrl": "/images/job6.jpg",
+    "title": "Digital Marketing Specialist",
+    "category": "Remote",
+    "salaryRange": "$50,000 - $70,000",
+    "description": "We are seeking a Digital Marketing Specialist to develop and implement online marketing strategies for our brand. This is a remote position.",
+    "postingDate": "2024-05-15",
+    "applicationDeadline": "2024-06-15",
+    "applicantsNumber": 19
+  },
+
+  {
+    "pictureUrl": "/images/job2.jpg",
+    "title": "Marketing Manager",
+    "category": "On Site",
+    "salaryRange": "$70,000 - $90,000",
+    "description": "Join our dynamic marketing team as a Marketing Manager! Responsibilities include developing and implementing marketing strategies to promote our products.",
+    "postingDate": "2024-05-08",
+    "applicationDeadline": "2024-06-08",
+    "applicantsNumber": 42
+  },
+  {
+    "pictureUrl": "/images/job7.jpg",
+    "title": "Software Engineer",
+    "category": "On Site",
+    "salaryRange": "$80,000 - $100,000",
+    "description": "We are hiring a Software Engineer to work on-site and contribute to the development of our cutting-edge software solutions.",
+    "postingDate": "2024-05-20",
+    "applicationDeadline": "2024-06-20",
+    "applicantsNumber": 25
+  },
+  {
+    "pictureUrl": "/images/job8.jpg",
+    "title": "HR Manager",
+    "category": "On Site",
+    "salaryRange": "$60,000 - $80,000",
+    "description": "Join our team as an HR Manager and oversee recruitment, employee relations, and HR policies on-site at our office.",
+    "postingDate": "2024-05-18",
+    "applicationDeadline": "2024-06-18",
+    "applicantsNumber": 33
+  },
+
+  {
+    "pictureUrl": "/images/job3.jpg",
+    "title": "Data Scientist",
+    "category": "Hybrid",
+    "salaryRange": "$80,000 - $100,000",
+    "description": "We are seeking a skilled Data Scientist to analyze large datasets and provide insights for business decisions. This position offers a hybrid work model.",
+    "postingDate": "2024-05-12",
+    "applicationDeadline": "2024-06-12",
+    "applicantsNumber": 28
+  },
+  {
+    "pictureUrl": "/images/job9.jpg",
+    "title": "Sales Representative",
+    "category": "Hybrid",
+    "salaryRange": "$50,000 - $70,000",
+    "description": "Join our sales team as a Sales Representative! This position offers a hybrid work model with opportunities for both remote and on-site work.",
+    "postingDate": "2024-05-22",
+    "applicationDeadline": "2024-06-22",
+    "applicantsNumber": 21
+  },
+  {
+    "pictureUrl": "/images/job10.jpg",
+    "title": "Project Manager",
+    "category": "Hybrid",
+    "salaryRange": "$90,000 - $110,000",
+    "description": "We are hiring a Project Manager to lead and coordinate projects. This role offers a hybrid work model with flexibility in work location.",
+    "postingDate": "2024-05-25",
+    "applicationDeadline": "2024-06-25",
+    "applicantsNumber": 17
+  },
+  {
+    "pictureUrl": "/images/job11.jpg",
+    "title": "Social Media Coordinator",
+    "category": "Part-Time",
+    "salaryRange": "$15 - $20 per hour",
+    "description": "We are hiring a part-time Social Media Coordinator to manage our social media channels, create content, and engage with our audience.",
+    "postingDate": "2024-05-28",
+    "applicationDeadline": "2024-06-28",
+    "applicantsNumber": 12
+  },
+  {
+    "pictureUrl": "/images/job12.jpg",
+    "title": "Graphic Designer",
+    "category": "Part-Time",
+    "salaryRange": "$20 - $25 per hour",
+    "description": "Join our team as a part-time Graphic Designer and create visually appealing designs for print and digital media.",
+    "postingDate": "2024-05-30",
+    "applicationDeadline": "2024-06-30",
+    "applicantsNumber": 16
+  },
+  {
+    "pictureUrl": "/images/job13.jpg",
+    "title": "Administrative Assistant",
+    "category": "Part-Time",
+    "salaryRange": "$18 - $22 per hour",
+    "description": "We are seeking a part-time Administrative Assistant to provide support with administrative tasks, scheduling, and office management.",
+    "postingDate": "2024-06-02",
+    "applicationDeadline": "2024-07-02",
+    "applicantsNumber": 9
+  }
+]

@@ -5,7 +5,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import defaultUserImage from "../../assets/user.png";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, loading } = useContext(AuthContext);
   const userImage = user?.photoURL || defaultUserImage;
   const navigate = useNavigate();
 
@@ -42,6 +42,15 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  if (loading) {
+    return (
+      <div className="container mx-auto h-screen flex items-center justify-center">
+        <span className="text-center loading loading-spinner loading-lg"></span>;
+      </div>
+    );
+  }
+
   return (
     <div className="navbar bg-base-300">
       {/* Navbar start */}
