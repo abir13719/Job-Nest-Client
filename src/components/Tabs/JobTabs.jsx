@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import { Container } from "@mui/material";
 import userImg from "../../assets/user.png";
+import { Link } from "react-router-dom";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,7 +54,7 @@ export default function JobTabs() {
       setJob(data.data);
     });
   }, []);
-  console.log(jobs);
+
   const onSiteJobs = jobs.filter((job) => job.category === "On Site");
   const RemoteJobs = jobs.filter((job) => job.category === "Remote");
   const HybridJobs = jobs.filter((job) => job.category === "Hybrid");
@@ -61,6 +62,10 @@ export default function JobTabs() {
 
   return (
     <div>
+      <div className="my-5">
+        <h1 className="text-4xl text-center font-bold">Explore Jobs</h1>
+      </div>
+
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -79,7 +84,7 @@ export default function JobTabs() {
         </Box>
         {/* All Jobs */}
         <CustomTabPanel value={value} index={0}>
-          <div className="grid grid-cols-2 gap-2 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {jobs.map((job) => (
               <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
@@ -101,9 +106,11 @@ export default function JobTabs() {
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
                 </div>
-                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                  View Details
-                </button>
+                <Link to={`/jobs/${job._id}`}>
+                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                    View Details
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -111,7 +118,7 @@ export default function JobTabs() {
 
         {/* OnSite Jobs */}
         <CustomTabPanel value={value} index={1}>
-          <div className="grid grid-cols-2 gap-2 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {onSiteJobs.map((job) => (
               <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
@@ -143,7 +150,7 @@ export default function JobTabs() {
 
         {/* Remote Jobs */}
         <CustomTabPanel value={value} index={2}>
-          <div className="grid grid-cols-2 gap-2 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {RemoteJobs.map((job) => (
               <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
@@ -175,7 +182,7 @@ export default function JobTabs() {
 
         {/* Hybrid Jobs */}
         <CustomTabPanel value={value} index={3}>
-          <div className="grid grid-cols-2 gap-2 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {HybridJobs.map((job) => (
               <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
@@ -207,7 +214,7 @@ export default function JobTabs() {
 
         {/* Part Time Jobs */}
         <CustomTabPanel value={value} index={4}>
-          <div className="grid grid-cols-2 gap-2 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {PartTimeJobs.map((job) => (
               <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">

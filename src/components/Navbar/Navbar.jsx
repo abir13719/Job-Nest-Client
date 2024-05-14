@@ -28,15 +28,19 @@ const Navbar = () => {
       <li>
         <NavLink to="/all-jobs">All Jobs</NavLink>
       </li>
-      <li>
-        <NavLink to="/applied-jobs">Applied Jobs</NavLink>
-      </li>
-      <li>
-        <NavLink to="/add-a-job">Add A Job</NavLink>
-      </li>
-      <li>
-        <NavLink to="/my-jobs">My Jobs</NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/applied-jobs">Applied Jobs</NavLink>
+          </li>
+          <li>
+            <NavLink to="/add-a-job">Add A Job</NavLink>
+          </li>
+          <li>
+            <NavLink to="/my-jobs">My Jobs</NavLink>
+          </li>{" "}
+        </>
+      )}
       <li>
         <NavLink to="/blogs">Blogs</NavLink>
       </li>
@@ -101,7 +105,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 border"
+              className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow bg-base-100 rounded-box w-52 border"
             >
               <li>
                 <div className="flex flex-col border-b p-2 rounded-bl-none rounded-br-none hover:bg-transparent hover:cursor-text">

@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
   const { LoginUser, LoginWithGoogle, LoginWithGitHub } = useContext(AuthContext);
   const [logInProblem, setLogInProblem] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -24,8 +25,8 @@ const Login = () => {
       .then((result) => {
         console.log("Logged in user with Email", result.user);
 
-        // navigating to home page
-        navigate("/");
+        // navigating to home page or expected routes
+        navigate(location?.state ? location?.state : "/");
 
         // reseting form inputs
         e.target.reset();
@@ -41,8 +42,8 @@ const Login = () => {
       .then((result) => {
         console.log("Logged in user with Google", result.user);
 
-        // navigating to home page
-        navigate("/");
+        // navigating to home page or expected routes
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error(error);
@@ -55,8 +56,8 @@ const Login = () => {
       .then((result) => {
         console.log("Logged in user with Github", result.user);
 
-        // navigating to home page
-        navigate("/");
+        // navigating to home page or expected routes
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error(error);
