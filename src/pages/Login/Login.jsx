@@ -78,7 +78,7 @@ const Login = () => {
               on the platform.
             </p>
             <Link to="/registration">
-              <button className="btn h-full md:h-14 border-none rounded-none w-32 text-base text-violet-100 bg-pink-800 hover:bg-pink-700">
+              <button className="btn h-full md:h-14 w-32 border-none rounded-none text-base text-violet-100 bg-pink-800 hover:bg-pink-700">
                 Registration
               </button>
             </Link>

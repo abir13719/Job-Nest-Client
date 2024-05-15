@@ -86,7 +86,7 @@ export default function JobTabs() {
         <CustomTabPanel value={value} index={0}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {jobs.map((job) => (
-              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+              <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
