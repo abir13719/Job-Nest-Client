@@ -1,7 +1,8 @@
 const Blogs = () => {
   return (
     <div className="container mx-auto">
-      <h1>This is blogs route</h1>
+      <img src="" alt="" />
+      <h1>What Is an Access Token (and How Does It Work)?</h1>
     </div>
   );
 };

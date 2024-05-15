@@ -120,7 +120,7 @@ export default function JobTabs() {
         <CustomTabPanel value={value} index={1}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {onSiteJobs.map((job) => (
-              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+              <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
@@ -140,9 +140,11 @@ export default function JobTabs() {
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
                 </div>
-                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                  View Details
-                </button>
+                <Link to={`/jobs/${job._id}`}>
+                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                    View Details
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -152,7 +154,7 @@ export default function JobTabs() {
         <CustomTabPanel value={value} index={2}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {RemoteJobs.map((job) => (
-              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+              <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
@@ -172,9 +174,11 @@ export default function JobTabs() {
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
                 </div>
-                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                  View Details
-                </button>
+                <Link to={`/jobs/${job._id}`}>
+                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                    View Details
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -184,7 +188,7 @@ export default function JobTabs() {
         <CustomTabPanel value={value} index={3}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {HybridJobs.map((job) => (
-              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+              <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
@@ -204,9 +208,11 @@ export default function JobTabs() {
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
                 </div>
-                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                  View Details
-                </button>
+                <Link to={`/jobs/${job._id}`}>
+                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                    View Details
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -216,7 +222,7 @@ export default function JobTabs() {
         <CustomTabPanel value={value} index={4}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {PartTimeJobs.map((job) => (
-              <div key={job._id} className="bg-base-200 p-4 grid gap-2 rounded-xl">
+              <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
@@ -236,9 +242,11 @@ export default function JobTabs() {
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
                 </div>
-                <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                  View Details
-                </button>
+                <Link to={`/jobs/${job._id}`}>
+                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                    View Details
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
