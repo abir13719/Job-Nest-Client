@@ -38,7 +38,14 @@ const AppliedJobs = () => {
           <tbody>
             {appliedJobs.map((job) => (
               <tr key={job._id}>
-                <th>{job.pictureUrl}</th>
+                <th>
+                  <div className="h-[40px] w-[200px]">
+                    <img
+                      className="h-full w-full object-cover object-center"
+                      src={job.pictureUrl}
+                    />
+                  </div>
+                </th>
                 <td>{job.title}</td>
                 <td>{job.salaryRange}</td>
                 <td>{job.resume}</td>

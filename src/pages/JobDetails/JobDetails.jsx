@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import img from "../../assets/sideImage.jpg";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const JobDetails = () => {
@@ -50,7 +49,7 @@ const JobDetails = () => {
   return (
     <div className="container mx-auto bg-base-200 my-5 p-5 rounded-xl">
       <div>
-        <img className="h-[70vh] w-full rounded-xl object-cover object-center" src={img} alt="" />
+        <img className="h-[70vh] w-full rounded-xl object-cover object-center" src={pictureUrl} />
       </div>
       <h1 className="text-4xl font-bold my-4">{title}</h1>
       <div className="flex gap-3 my-4">

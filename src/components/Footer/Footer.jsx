@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="bg-base-300">
+    <div className="bg-base-200">
       <div className="flex flex-col-reverse md:flex-col">
         <footer className="footer grid-cols-2 md:grid-cols-4 container mx-auto px-8 md:px-0 py-10 text-base-content">
           <nav>
