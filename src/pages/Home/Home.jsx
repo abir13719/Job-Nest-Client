@@ -1,3 +1,4 @@
+import QNA from "../../components/QNA/QNA";
 import Slider from "../../components/Slider/Slider";
 import JobTabs from "../../components/Tabs/JobTabs";
 
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <Slider></Slider>
       <JobTabs></JobTabs>
+      <QNA></QNA>
     </div>
   );
 };
