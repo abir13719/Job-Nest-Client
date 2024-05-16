@@ -3,19 +3,22 @@ import addIcon from "../../assets/add-96.png";
 import { AuthContext } from "../../providers/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const AddAJob = () => {
+const UpdateJob = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [deadline, setDeadline] = useState(new Date());
   const { user } = useContext(AuthContext);
+  const loadedJobData = useLoaderData();
+  console.log(loadedJobData);
 
-  const handleAddJob = (e) => {
+  const handleUpdateJob = (e) => {
     e.preventDefault();
 
     // getting form input values
     const form = e.target;
-    const newJob = {
+    const updatedJob = {
       title: form.jobTitle.value,
       salaryRange: form.salary.value,
       pictureUrl: form.jobPicture.value,
@@ -28,24 +31,24 @@ const AddAJob = () => {
       description: form.description.value,
     };
 
-    // Creating in Database
-    fetch("http://localhost:5000/jobs", {
-      method: "POST",
+    // Updating Database
+    fetch(`http://localhost:5000/jobs/${loadedJobData._id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newJob),
+      body: JSON.stringify(updatedJob),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.insertedId) {
+        console.log(data);
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
-            text: "Job added successfully",
+            text: "Job updated successfully",
             icon: "success",
             confirmButtonText: "OK",
           });
-          form.reset();
         }
       });
   };
@@ -58,19 +61,19 @@ const AddAJob = () => {
           <div className="h-full flex flex-col items-center justify-center p-5">
             <img className="my-2" src={addIcon} />
             <h3 className="text-4xl md:text-5xl lg:text-6xl text-center font-extrabold text-violet-300">
-              Post Job
+              Update Job
             </h3>
             <p className="p-10 text-lg md:text-xl  max-w-md text-center text-violet-100">
-              Let the world know, you need someone skilled to help you
+              Accurate and more information can make the process easy to find a skilled employee
             </p>
           </div>
         </div>
 
         {/* Form div */}
         <div className="col-span-12 md:col-span-7 p-5 lg:p-16">
-          <form onSubmit={handleAddJob} className="grid grid-cols-2 gap-3 h-full ">
+          <form onSubmit={handleUpdateJob} className="grid grid-cols-2 gap-3 h-full ">
             <h1 className="text-2xl md:text-3xl text-pink-600 font-bold col-span-2">
-              Add Job&apos;s Descriptions
+              Update Information
             </h1>
             <div className="col-span-2 md:col-span-1 space-y-1">
               <label htmlFor="jobTitle" className="block font-medium">
@@ -82,6 +85,7 @@ const AddAJob = () => {
                 name="jobTitle"
                 id="jobTitle"
                 placeholder="Title of Your Job"
+                defaultValue={loadedJobData?.title}
               />
             </div>
 
@@ -95,6 +99,7 @@ const AddAJob = () => {
                 name="salary"
                 id="salary"
                 placeholder="Salary Range"
+                defaultValue={loadedJobData?.salaryRange}
               />
             </div>
 
@@ -108,6 +113,7 @@ const AddAJob = () => {
                 name="jobPicture"
                 id="jobPicture"
                 placeholder="URL of Your Job Banner"
+                defaultValue={loadedJobData?.pictureUrl}
               />
             </div>
 
@@ -119,6 +125,7 @@ const AddAJob = () => {
                 id="category"
                 name="category"
                 className="w-full py-3 md:py-4 px-3 font-medium"
+                defaultValue={loadedJobData?.category}
               >
                 <option value="On Site">On Site</option>
                 <option value="Remote">Remote</option>
@@ -136,7 +143,7 @@ const AddAJob = () => {
                 type="text"
                 name="applicants"
                 id="applicants"
-                defaultValue={0}
+                defaultValue={loadedJobData?.applicantsNumber}
               />
             </div>
 
@@ -150,6 +157,7 @@ const AddAJob = () => {
                   minDate={new Date()}
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
+                  defaultValue={loadedJobData?.postingDate}
                 />
               </div>
             </div>
@@ -163,6 +171,7 @@ const AddAJob = () => {
                   minDate={new Date()}
                   selected={deadline}
                   onChange={(date) => setDeadline(date)}
+                  defaultValue={loadedJobData?.applicationDeadline}
                 />
               </div>
             </div>
@@ -204,6 +213,7 @@ const AddAJob = () => {
                 id="description"
                 rows="3"
                 className="w-full py-2 px-3 font-medium"
+                defaultValue={loadedJobData?.description}
               ></textarea>
             </div>
 
@@ -211,7 +221,7 @@ const AddAJob = () => {
               <input
                 className="w-full h-14 md:h-16 btn text-base bg-pink-700 hover:bg-pink-600 text-violet-100 rounded-none"
                 type="submit"
-                value="Add Job"
+                value="Update Job"
               />
             </div>
           </form>
@@ -221,4 +231,4 @@ const AddAJob = () => {
   );
 };
 
-export default AddAJob;
+export default UpdateJob;
