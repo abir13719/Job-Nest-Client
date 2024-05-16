@@ -12,7 +12,7 @@ const AllJobs = () => {
   console.log(allJobs);
   return (
     <div className="container mx-auto">
-      <h1>This is all jobs route</h1>
+      <h1 className="text-center text-4xl font-bold my-5">Find Your Dream Job</h1>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

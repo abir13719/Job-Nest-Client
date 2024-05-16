@@ -27,7 +27,7 @@ const JobDetails = () => {
     fetch("http://localhost:5000/jobs/applied", {
       method: "POST",
       headers: {
-        "content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(userInfo),
     })

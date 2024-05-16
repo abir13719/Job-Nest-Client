@@ -1,5 +1,5 @@
 import qna from "../../assets/qna.png";
-const QNA = () => {
+const QandA = () => {
   return (
     <div className="py-1 md:py-10">
       <div className="h-full md:h-[560px] container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
@@ -9,7 +9,7 @@ const QNA = () => {
 
         {/* Image div */}
         <div className="col-span-12 md:col-span-5 p-3 md:p-6">
-          <img className="w-full h-full object-contain object-center" src={qna} />
+          <img className="w-full h-full object-contain object-top" src={qna} />
         </div>
 
         {/* Form div */}
@@ -99,7 +99,7 @@ const QNA = () => {
             </div>
             <div className="collapse-content">
               <p>
-                To apply for a job listed on our website, simply click on the "Apply Now" button or
+                To apply for a job listed on our website, simply click on the Apply Now button or
                 follow the application instructions provided in the job listing. You may be required
                 to submit your resume, cover letter, and other relevant documents.
               </p>
@@ -111,4 +111,4 @@ const QNA = () => {
   );
 };
 
-export default QNA;
+export default QandA;
