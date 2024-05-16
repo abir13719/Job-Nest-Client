@@ -11,8 +11,6 @@ const UserReview = () => {
     axios.get("http://localhost:5000/feedback").then((data) => setReviews(data.data));
   }, []);
 
-  console.log(reviews);
-
   return (
     <div className="container mx-auto py-4">
       <h1 className="text-center text-4xl font-bold my-5">Our Client Reviews</h1>
@@ -35,8 +33,6 @@ const UserReview = () => {
           delay: 3000,
           disableOnInteraction: false,
         }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
       >
         {reviews.map((review) => (
           <SwiperSlide key={review._id} className="rounded-2xl p-4 grid gap-2 shadow-xl">

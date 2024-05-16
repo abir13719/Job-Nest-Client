@@ -13,18 +13,24 @@ const JobDetails = () => {
     axios.get(`http://localhost:5000/jobs/${id}`).then((data) => {
       setJobDetails(data.data);
     });
-  }, []);
+  }, [id]);
 
-  const { _id, title, pictureUrl, description, salaryRange, applicantsNumber } = JobDetails;
+  console.log(JobDetails);
+
+  const { _id, title, description, pictureUrl, salaryRange, applicantsNumber } = JobDetails;
 
   const handleApplyConfirmed = (e) => {
     const userInfo = {
       jobId: _id,
+      title: title,
+      pictureUrl: pictureUrl,
+      salaryRange: salaryRange,
+      description: description,
       name: e.target.name.value,
       email: e.target.email.value,
       resume: e.target.resume.value,
     };
-    fetch("http://localhost:5000/jobs/applied", {
+    fetch("http://localhost:5000/applied", {
       method: "POST",
       headers: {
         "content-type": "application/json",
