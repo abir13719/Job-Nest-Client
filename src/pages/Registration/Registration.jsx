@@ -52,7 +52,7 @@ const Registration = () => {
         // navigating to home page
         navigate("/");
 
-        // reseting form inputs
+        // // reseting form inputs
         e.target.reset();
       })
       .catch((error) => {

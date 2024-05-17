@@ -1,39 +1,42 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { GoSearch } from "react-icons/go";
 
 const AllJobs = () => {
   const [allJobs, setAllJobs] = useState([]);
+  const [searchTxt, setSearchTxt] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/jobs").then((data) => setAllJobs(data.data));
+    axios.get("http://localhost:5000/jobs").then((data) => {
+      setAllJobs(data.data);
+    });
   }, []);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const srcTxt = e.target.searchTxt.value;
-    console.log(srcTxt);
+  const handleInputChange = (value) => {
+    setSearchTxt(value);
+    handleSearch(value);
+  };
+  const handleSearch = (value) => {
+    axios.get(`http://localhost:5000/jobs?title=${value}`).then((data) => setAllJobs(data.data));
   };
   return (
     <div className="container mx-auto">
       <h1 className="text-center text-4xl font-bold my-5">Find Your Dream Job</h1>
       <div className="flex justify-center my-5">
-        <form
-          onSubmit={handleSearch}
-          className="w-[350px] md:w-[480px] border rounded-full overflow-hidden flex justify-between"
-        >
+        <div className="w-[350px] md:w-[480px] p-3 border rounded-full overflow-hidden flex items-center gap-2">
+          <div className="text-2xl">
+            <GoSearch />
+          </div>
           <input
-            className="py-3 pl-5 pr-2 w-full text-base outline-none"
+            className="w-full text-base outline-none"
             type="search"
             name="searchTxt"
-            id=""
+            value={searchTxt}
+            onChange={(e) => handleInputChange(e.target.value)}
+            placeholder="Search here"
           />
-          <input
-            className="btn bg-base-300 rounded-none border-none outline-none h-full p-3"
-            type="submit"
-            value="Search"
-          />
-        </form>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="table">

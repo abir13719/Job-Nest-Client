@@ -158,6 +158,7 @@ const UpdateJob = () => {
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                   defaultValue={loadedJobData?.postingDate}
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
             </div>
@@ -172,6 +173,7 @@ const UpdateJob = () => {
                   selected={deadline}
                   onChange={(date) => setDeadline(date)}
                   defaultValue={loadedJobData?.applicationDeadline}
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
             </div>

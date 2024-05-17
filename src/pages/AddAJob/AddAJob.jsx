@@ -150,6 +150,7 @@ const AddAJob = () => {
                   minDate={new Date()}
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
             </div>
@@ -163,6 +164,7 @@ const AddAJob = () => {
                   minDate={new Date()}
                   selected={deadline}
                   onChange={(date) => setDeadline(date)}
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
             </div>

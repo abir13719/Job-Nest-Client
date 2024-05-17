@@ -11,11 +11,13 @@ import Login from "../pages/Login/Login";
 import JobDetails from "../pages/JobDetails/JobDetails";
 import PrivateRoutes from "./PrivateRoutes";
 import UpdateJob from "../pages/UpdateJob/UpdateJob";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Base></Base>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -27,15 +29,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/applied-jobs",
-        element: <AppliedJobs></AppliedJobs>,
+        element: (
+          <PrivateRoutes>
+            <AppliedJobs></AppliedJobs>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/add-a-job",
-        element: <AddAJob></AddAJob>,
+        element: (
+          <PrivateRoutes>
+            <AddAJob></AddAJob>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/my-jobs",
-        element: <MyJobs></MyJobs>,
+        element: (
+          <PrivateRoutes>
+            <MyJobs></MyJobs>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/blogs",
