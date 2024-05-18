@@ -16,7 +16,8 @@ const JobDetails = () => {
 
   console.log(JobDetails);
 
-  const { _id, title, description, pictureUrl, salaryRange, applicantsNumber } = JobDetails;
+  const { _id, title, description, pictureUrl, salaryRange, applicantsNumber, category } =
+    JobDetails;
 
   const handleApplyConfirmed = (e) => {
     const userInfo = {
@@ -24,6 +25,7 @@ const JobDetails = () => {
       title: title,
       pictureUrl: pictureUrl,
       salaryRange: salaryRange,
+      category: category,
       description: description,
       name: e.target.name.value,
       email: e.target.email.value,

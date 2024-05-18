@@ -36,22 +36,7 @@ const MyJobs = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-center text-4xl font-bold my-5">Find Your Dream Job</h1>
-      <div className="flex justify-center my-5">
-        <form className="w-[350px] md:w-[480px] border rounded-full overflow-hidden flex justify-between">
-          <input
-            className="py-3 pl-5 pr-2 w-full text-base outline-none"
-            type="search"
-            name="searchTxt"
-            id=""
-          />
-          <input
-            className="btn bg-base-300 rounded-none border-none outline-none h-full p-3"
-            type="submit"
-            value="Search"
-          />
-        </form>
-      </div>
+      <h1 className="text-center text-4xl font-bold my-5">Your Jobs To Find Employee</h1>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

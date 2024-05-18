@@ -9,13 +9,27 @@ const AppliedJobs = () => {
     axios.get("http://localhost:5000/applied").then((data) => setAppliedJobs(data.data));
   }, []);
 
+  const handleCategoryChange = (e) => {
+    const catValue = e.target.value;
+    axios
+      .get(`http://localhost:5000/applied?category=${catValue}`)
+      .then((data) => setAppliedJobs(data.data));
+  };
+
   return (
     <div className="container mx-auto">
+      <p></p>
       <h1 className="text-center text-4xl font-bold my-5">Jobs You Have Applied</h1>
       <div className="flex flex-col items-center justify-center my-5">
         <p className="text-center">Filter Jobs By Category</p>
         <form className="w-[350px] md:w-[480px] border overflow-hidden flex justify-between">
-          <select name="" id="" className="w-full p-3 border-none outline-none">
+          <select
+            name="catValue"
+            onChange={handleCategoryChange}
+            id=""
+            className="w-full p-3 border-none outline-none"
+          >
+            <option value="">All</option>
             <option value="On Site">On Site</option>
             <option value="Remote">Remote</option>
             <option value="Hybrid">Hybrid</option>
