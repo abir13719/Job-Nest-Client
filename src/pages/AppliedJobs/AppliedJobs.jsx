@@ -1,13 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const AppliedJobs = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/applied").then((data) => setAppliedJobs(data.data));
-  }, []);
+    axios
+      .get(`http://localhost:5000/applied?email=${user.email}`)
+      .then((data) => setAppliedJobs(data.data));
+  }, [user.email]);
 
   const handleCategoryChange = (e) => {
     const catValue = e.target.value;
