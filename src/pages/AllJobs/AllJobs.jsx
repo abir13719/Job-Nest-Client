@@ -29,7 +29,7 @@ const AllJobs = () => {
             <GoSearch />
           </div>
           <input
-            className="w-full text-base outline-none"
+            className="w-full bg-transparent text-base outline-none"
             type="search"
             name="searchTxt"
             value={searchTxt}

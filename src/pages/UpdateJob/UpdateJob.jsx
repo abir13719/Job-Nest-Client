@@ -95,7 +95,7 @@ const UpdateJob = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 font-medium"
-                type="text"
+                type="number"
                 name="salary"
                 id="salary"
                 placeholder="Salary Range"
@@ -109,7 +109,7 @@ const UpdateJob = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3  font-medium"
-                type="text"
+                type="url"
                 name="jobPicture"
                 id="jobPicture"
                 placeholder="URL of Your Job Banner"
@@ -140,7 +140,7 @@ const UpdateJob = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 font-medium"
-                type="text"
+                type="number"
                 name="applicants"
                 id="applicants"
                 defaultValue={loadedJobData?.applicantsNumber}
@@ -198,7 +198,7 @@ const UpdateJob = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 font-medium"
-                type="text"
+                type="email"
                 name="ownerEmail"
                 id="ownerEmail"
                 defaultValue={user?.email}

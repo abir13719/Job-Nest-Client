@@ -3,36 +3,67 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { isBefore, parse } from "date-fns";
 
 const JobDetails = () => {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  const [JobDetails, setJobDetails] = useState({});
+  const [jobDetails, setJobDetails] = useState({});
+  const [isApplied, setIsApplied] = useState(false);
+  const [isDeadlineExpired, setIsDeadlineExpired] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/jobs/${id}`).then((data) => {
-      setJobDetails(data.data);
-    });
-  }, [id]);
+    const fetchJobDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/jobs/${id}`);
+        const jobData = response.data;
+        setJobDetails(jobData);
 
-  const { _id, title, description, pictureUrl, salaryRange, applicantsNumber, category } =
-    JobDetails;
+        const deadlineDate = parse(jobData.applicationDeadline, "dd/MM/yyyy", new Date());
+        setIsDeadlineExpired(isBefore(deadlineDate, new Date()));
+
+        if (user?.email) {
+          const appliedResponse = await axios.get(
+            `http://localhost:5000/applied/${id}/${user.email}`
+          );
+          setIsApplied(appliedResponse.data.applied);
+        }
+      } catch (error) {
+        console.error("Error fetching job details or applied status:", error);
+      }
+    };
+
+    fetchJobDetails();
+  }, [id, user]);
+
+  const {
+    _id,
+    title,
+    description,
+    pictureUrl,
+    salaryRange,
+    applicantsNumber,
+    category,
+    postByEmail,
+  } = jobDetails;
 
   const handleApply = () => {
-    document.getElementById("my_modal_3").showModal();
+    const modal = document.getElementById("my_modal_3");
+    if (modal) {
+      modal.showModal();
+    }
   };
 
   const handleApplySubmit = (e) => {
     e.preventDefault();
 
-    // getting form input values
     const userInfo = {
       jobId: _id,
-      title: title,
-      pictureUrl: pictureUrl,
-      salaryRange: salaryRange,
-      category: category,
-      description: description,
+      title,
+      pictureUrl,
+      salaryRange,
+      category,
+      description,
       name: e.target.name.value,
       email: user.email,
       resume: e.target.resume.value,
@@ -50,13 +81,20 @@ const JobDetails = () => {
         if (data.insertedId) {
           Swal.fire({
             title: "Success!",
-            text: "Job added successfully",
+            text: "Application submitted successfully",
             icon: "success",
             confirmButtonText: "OK",
           });
-          document.getElementById("my_modal_3").close();
+          setIsApplied(true); // Update state to reflect application status
+          const modal = document.getElementById("my_modal_3");
+          if (modal) {
+            modal.close();
+          }
           e.target.reset();
         }
+      })
+      .catch((error) => {
+        console.error("Error submitting application:", error);
       });
   };
 
@@ -76,22 +114,49 @@ const JobDetails = () => {
       </div>
       <p>{description}</p>
 
-      <button
-        className="mt-5 btn border-none rounded-none text-base text-violet-100 bg-pink-800 hover:bg-pink-700"
-        onClick={handleApply}
-      >
-        Apply Now
-      </button>
+      {user?.email === postByEmail ? (
+        <button
+          className="mt-5 btn border-none rounded-none text-base text-gray-500 bg-gray-300 cursor-not-allowed"
+          disabled
+        >
+          You can not apply to your own job
+        </button>
+      ) : isDeadlineExpired ? (
+        <button
+          className="mt-5 btn border-none rounded-none text-base text-gray-500 bg-gray-300 cursor-not-allowed"
+          disabled
+        >
+          Application deadline has expired
+        </button>
+      ) : isApplied ? (
+        <button
+          className="mt-5 btn border-none rounded-none text-base text-gray-500 bg-gray-300 cursor-not-allowed"
+          disabled
+        >
+          Already applied
+        </button>
+      ) : (
+        <button
+          className="mt-5 btn border-none rounded-none text-base text-violet-100 bg-pink-800 hover:bg-pink-700"
+          onClick={handleApply}
+        >
+          Apply Now
+        </button>
+      )}
 
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box bg-base-200">
           <h1 className="text-center font-bold text-2xl">Confirm Apply</h1>
           <form onSubmit={handleApplySubmit}>
-            {/* Close button without submitting the form */}
             <button
               type="button"
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => document.getElementById("my_modal_3").close()}
+              onClick={() => {
+                const modal = document.getElementById("my_modal_3");
+                if (modal) {
+                  modal.close();
+                }
+              }}
             >
               ✕
             </button>
