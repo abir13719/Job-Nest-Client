@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const JobDetails = () => {
   const { user } = useContext(AuthContext);
@@ -14,12 +15,17 @@ const JobDetails = () => {
     });
   }, [id]);
 
-  console.log(JobDetails);
-
   const { _id, title, description, pictureUrl, salaryRange, applicantsNumber, category } =
     JobDetails;
 
-  const handleApplyConfirmed = (e) => {
+  const handleApply = () => {
+    document.getElementById("my_modal_3").showModal();
+  };
+
+  const handleApplySubmit = (e) => {
+    e.preventDefault();
+
+    // getting form input values
     const userInfo = {
       jobId: _id,
       title: title,
@@ -28,9 +34,10 @@ const JobDetails = () => {
       category: category,
       description: description,
       name: e.target.name.value,
-      email: e.target.email.value,
+      email: user.email,
       resume: e.target.resume.value,
     };
+
     fetch("http://localhost:5000/applied", {
       method: "POST",
       headers: {
@@ -40,9 +47,14 @@ const JobDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.insertedId) {
-          alert("Applied successfully");
+          Swal.fire({
+            title: "Success!",
+            text: "Job added successfully",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          document.getElementById("my_modal_3").close();
           e.target.reset();
         }
       });
@@ -51,7 +63,11 @@ const JobDetails = () => {
   return (
     <div className="container mx-auto bg-base-200 my-5 p-5 rounded-xl">
       <div>
-        <img className="h-[70vh] w-full rounded-xl object-cover object-center" src={pictureUrl} />
+        <img
+          className="h-[70vh] w-full rounded-xl object-cover object-center"
+          src={pictureUrl}
+          alt={title}
+        />
       </div>
       <h1 className="text-4xl font-bold my-4">{title}</h1>
       <div className="flex gap-3 my-4">
@@ -60,10 +76,9 @@ const JobDetails = () => {
       </div>
       <p>{description}</p>
 
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
         className="mt-5 btn border-none rounded-none text-base text-violet-100 bg-pink-800 hover:bg-pink-700"
-        onClick={() => document.getElementById("my_modal_3").showModal()}
+        onClick={handleApply}
       >
         Apply Now
       </button>
@@ -71,9 +86,15 @@ const JobDetails = () => {
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box bg-base-200">
           <h1 className="text-center font-bold text-2xl">Confirm Apply</h1>
-          <form onSubmit={handleApplyConfirmed} method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          <form onSubmit={handleApplySubmit}>
+            {/* Close button without submitting the form */}
+            <button
+              type="button"
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={() => document.getElementById("my_modal_3").close()}
+            >
+              ✕
+            </button>
             <div className="space-y-2 mt-4">
               <input
                 className="w-full py-4 px-3 border outline-none font-medium"

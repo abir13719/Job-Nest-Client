@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import addIcon from "../../assets/add-96.png";
 import { AuthContext } from "../../providers/AuthProvider";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -11,7 +12,6 @@ const UpdateJob = () => {
   const [deadline, setDeadline] = useState(new Date());
   const { user } = useContext(AuthContext);
   const loadedJobData = useLoaderData();
-  console.log(loadedJobData);
 
   const handleUpdateJob = (e) => {
     e.preventDefault();
@@ -24,8 +24,8 @@ const UpdateJob = () => {
       pictureUrl: form.jobPicture.value,
       category: form.category.value,
       applicantsNumber: form.applicants.value,
-      postingDate: startDate,
-      applicationDeadline: deadline,
+      postingDate: startDate ? format(startDate, "dd/MM/yyyy") : null,
+      applicationDeadline: deadline ? format(deadline, "dd/MM/yyyy") : null,
       postBy: form.userName.value,
       postByEmail: form.ownerEmail.value,
       description: form.description.value,

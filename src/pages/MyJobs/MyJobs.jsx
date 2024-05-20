@@ -16,22 +16,25 @@ const MyJobs = () => {
   }, [url]);
 
   const handleDelete = (_id) => {
-    fetch(`http://localhost:5000/jobs/${_id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.deletedCount > 0) {
-          Swal.fire({
-            title: "Success!",
-            text: "Job deleted successfully",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-          const remainingJob = myJobs.filter((job) => job._id !== _id);
-          setMyJobs(remainingJob);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:5000/jobs/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "Your job has been deleted.", "success");
+            const remainingJobs = myJobs.filter((job) => job._id !== _id);
+            setMyJobs(remainingJobs);
+          }
+        });
+      }
+    });
   };
 
   return (

@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import addIcon from "../../assets/add-96.png";
 import { AuthContext } from "../../providers/AuthProvider";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 
@@ -21,12 +22,14 @@ const AddAJob = () => {
       pictureUrl: form.jobPicture.value,
       category: form.category.value,
       applicantsNumber: form.applicants.value,
-      postingDate: startDate,
-      applicationDeadline: deadline,
+      postingDate: startDate ? format(startDate, "dd/MM/yyyy") : null,
+      applicationDeadline: deadline ? format(deadline, "dd/MM/yyyy") : null,
       postBy: form.userName.value,
       postByEmail: form.ownerEmail.value,
       description: form.description.value,
     };
+
+    console.log(newJob);
 
     // Creating in Database
     fetch("http://localhost:5000/jobs", {
