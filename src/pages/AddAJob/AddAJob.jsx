@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const AddAJob = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -14,13 +15,7 @@ const AddAJob = () => {
 
   const mutation = useMutation({
     mutationFn: (newJob) => {
-      return fetch("http://localhost:5000/jobs", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(newJob),
-      }).then((res) => res.json());
+      return axios.post("http://localhost:5000/jobs", newJob).then((data) => data.data);
     },
     onSuccess: (data) => {
       if (data.insertedId) {
@@ -32,8 +27,7 @@ const AddAJob = () => {
         });
       }
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       Swal.fire({
         title: "Error!",
         text: "There was an issue adding the job",

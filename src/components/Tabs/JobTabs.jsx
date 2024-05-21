@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { Container } from "@mui/material";
 import userImg from "../../assets/user.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
+// CustomTabPanel component
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -34,6 +36,7 @@ CustomTabPanel.propTypes = {
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -41,24 +44,42 @@ function a11yProps(index) {
   };
 }
 
+// Function to fetch jobs
+const fetchJobs = async () => {
+  const { data } = await axios.get("http://localhost:5000/jobs");
+  return data;
+};
+
 export default function JobTabs() {
   const [value, setValue] = React.useState(0);
-  const [jobs, setJob] = React.useState([]);
+
+  const {
+    data: jobs = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: fetchJobs,
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  React.useEffect(() => {
-    axios.get("http://localhost:5000/jobs").then((data) => {
-      setJob(data.data);
-    });
-  }, []);
+  if (isLoading) {
+    return <div className="h-screen flex items-center justify-center font-bold">Loading...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">Error loading jobs.</div>
+    );
+  }
 
   const onSiteJobs = jobs.filter((job) => job.category === "On Site");
-  const RemoteJobs = jobs.filter((job) => job.category === "Remote");
-  const HybridJobs = jobs.filter((job) => job.category === "Hybrid");
-  const PartTimeJobs = jobs.filter((job) => job.category === "Part-Time");
+  const remoteJobs = jobs.filter((job) => job.category === "Remote");
+  const hybridJobs = jobs.filter((job) => job.category === "Hybrid");
+  const partTimeJobs = jobs.filter((job) => job.category === "Part-Time");
 
   return (
     <div>
@@ -90,7 +111,7 @@ export default function JobTabs() {
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
-                      <img className="h-10 w-10" src={userImg} />
+                      <img className="h-10 w-10" src={userImg} alt="User" />
                     </div>
                     <div>
                       <p>{job?.postBy}</p>
@@ -124,7 +145,7 @@ export default function JobTabs() {
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
-                      <img className="h-10 w-10" src={userImg} />
+                      <img className="h-10 w-10" src={userImg} alt="User" />
                     </div>
                     <div>
                       <p>{job?.postBy}</p>
@@ -153,12 +174,12 @@ export default function JobTabs() {
         {/* Remote Jobs */}
         <CustomTabPanel value={value} index={2}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
-            {RemoteJobs.map((job) => (
+            {remoteJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
-                      <img className="h-10 w-10" src={userImg} />
+                      <img className="h-10 w-10" src={userImg} alt="User" />
                     </div>
                     <div>
                       <p>{job?.postBy}</p>
@@ -187,12 +208,12 @@ export default function JobTabs() {
         {/* Hybrid Jobs */}
         <CustomTabPanel value={value} index={3}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
-            {HybridJobs.map((job) => (
+            {hybridJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
-                      <img className="h-10 w-10" src={userImg} />
+                      <img className="h-10 w-10" src={userImg} alt="User" />
                     </div>
                     <div>
                       <p>{job?.postBy}</p>
@@ -221,12 +242,12 @@ export default function JobTabs() {
         {/* Part Time Jobs */}
         <CustomTabPanel value={value} index={4}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
-            {PartTimeJobs.map((job) => (
+            {partTimeJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
                 <div className="flex gap-3 items-center justify-between ">
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
-                      <img className="h-10 w-10" src={userImg} />
+                      <img className="h-10 w-10" src={userImg} alt="User" />
                     </div>
                     <div>
                       <p>{job?.postBy}</p>

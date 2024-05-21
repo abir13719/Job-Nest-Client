@@ -1,40 +1,46 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { isBefore, parse } from "date-fns";
 
+const fetchJobDetails = async ({ queryKey }) => {
+  const [_, id] = queryKey;
+  const response = await axios.get(`http://localhost:5000/jobs/${id}`);
+  return response.data;
+};
+
+const fetchAppliedStatus = async ({ queryKey }) => {
+  const [_, id, email] = queryKey;
+  const response = await axios.get(`http://localhost:5000/applied/${id}/${email}`);
+  return response.data.applied;
+};
+
 const JobDetails = () => {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  const [jobDetails, setJobDetails] = useState({});
-  const [isApplied, setIsApplied] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { data: jobDetails = {}, isLoading: jobLoading } = useQuery({
+    queryKey: ["jobDetails", id],
+    queryFn: fetchJobDetails,
+  });
+
+  const { data: isApplied = false, isLoading: appliedLoading } = useQuery({
+    queryKey: ["appliedStatus", id, user?.email],
+    queryFn: fetchAppliedStatus,
+    enabled: !!user?.email,
+  });
+
   const [isDeadlineExpired, setIsDeadlineExpired] = useState(false);
-
   useEffect(() => {
-    const fetchJobDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/jobs/${id}`);
-        const jobData = response.data;
-        setJobDetails(jobData);
-
-        const deadlineDate = parse(jobData.applicationDeadline, "dd/MM/yyyy", new Date());
-        setIsDeadlineExpired(isBefore(deadlineDate, new Date()));
-
-        if (user?.email) {
-          const appliedResponse = await axios.get(
-            `http://localhost:5000/applied/${id}/${user.email}`
-          );
-          setIsApplied(appliedResponse.data.applied);
-        }
-      } catch (error) {
-        console.error("Error fetching job details or applied status:", error);
-      }
-    };
-
-    fetchJobDetails();
-  }, [id, user]);
+    if (jobDetails.applicationDeadline) {
+      const deadlineDate = parse(jobDetails.applicationDeadline, "dd/MM/yyyy", new Date());
+      setIsDeadlineExpired(isBefore(deadlineDate, new Date()));
+    }
+  }, [jobDetails]);
 
   const {
     _id,
@@ -47,6 +53,23 @@ const JobDetails = () => {
     postByEmail,
   } = jobDetails;
 
+  const mutation = useMutation({
+    mutationFn: (newApplied) =>
+      axios.post("http://localhost:5000/applied", newApplied).then((res) => res.data),
+    onSuccess: (data) => {
+      if (data.insertedId) {
+        Swal.fire({
+          title: "Success!",
+          text: "Application submitted successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        queryClient.invalidateQueries(["jobDetails", id]);
+        queryClient.invalidateQueries(["appliedStatus", id, user?.email]);
+      }
+    },
+  });
+
   const handleApply = () => {
     const modal = document.getElementById("my_modal_3");
     if (modal) {
@@ -56,7 +79,6 @@ const JobDetails = () => {
 
   const handleApplySubmit = (e) => {
     e.preventDefault();
-
     const userInfo = {
       jobId: _id,
       title,
@@ -68,42 +90,12 @@ const JobDetails = () => {
       email: user.email,
       resume: e.target.resume.value,
     };
-
-    fetch("http://localhost:5000/applied", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userInfo),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setJobDetails((preDetails) => {
-          return {
-            ...preDetails,
-            applicantsNumber: preDetails.applicantsNumber + 1,
-          };
-        });
-
-        if (data.insertedId) {
-          Swal.fire({
-            title: "Success!",
-            text: "Application submitted successfully",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-          setIsApplied(true); // Update state to reflect application status
-          const modal = document.getElementById("my_modal_3");
-          if (modal) {
-            modal.close();
-          }
-          e.target.reset();
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting application:", error);
-      });
+    mutation.mutate(userInfo);
   };
+
+  if (jobLoading || appliedLoading) {
+    return <div className="h-screen flex items-center justify-center font-bold">Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto bg-base-200 my-5 p-5 rounded-xl">
