@@ -5,11 +5,43 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
+import { useMutation } from "@tanstack/react-query";
 
 const AddAJob = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [deadline, setDeadline] = useState(new Date());
   const { user } = useContext(AuthContext);
+
+  const mutation = useMutation({
+    mutationFn: (newJob) => {
+      return fetch("http://localhost:5000/jobs", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newJob),
+      }).then((res) => res.json());
+    },
+    onSuccess: (data) => {
+      if (data.insertedId) {
+        Swal.fire({
+          title: "Success!",
+          text: "Job added successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+      Swal.fire({
+        title: "Error!",
+        text: "There was an issue adding the job",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    },
+  });
 
   const handleAddJob = (e) => {
     e.preventDefault();
@@ -29,28 +61,8 @@ const AddAJob = () => {
       description: form.description.value,
     };
 
-    console.log(newJob);
-
-    // Creating in Database
-    fetch("http://localhost:5000/jobs", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newJob),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          Swal.fire({
-            title: "Success!",
-            text: "Job added successfully",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-          form.reset();
-        }
-      });
+    mutation.mutate(newJob);
+    form.reset();
   };
 
   return (

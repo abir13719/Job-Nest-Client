@@ -78,6 +78,13 @@ const JobDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        setJobDetails((preDetails) => {
+          return {
+            ...preDetails,
+            applicantsNumber: preDetails.applicantsNumber + 1,
+          };
+        });
+
         if (data.insertedId) {
           Swal.fire({
             title: "Success!",
