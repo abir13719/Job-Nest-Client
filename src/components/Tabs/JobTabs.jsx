@@ -8,6 +8,7 @@ import { Container } from "@mui/material";
 import userImg from "../../assets/user.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 // CustomTabPanel component
 function CustomTabPanel(props) {
@@ -112,7 +113,12 @@ export default function JobTabs() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {jobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
-                <div className="flex gap-3 items-center justify-between ">
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: 50 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex gap-3 items-center justify-between"
+                >
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
                       <img className="h-10 w-10" src={userImg} alt="User" />
@@ -126,15 +132,24 @@ export default function JobTabs() {
                     <p>Applied: {job?.applicantsNumber}</p>
                     <p>Deadline: {job?.applicationDeadline}</p>
                   </div>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
-                </div>
+                </motion.div>
                 <Link to={`/jobs/${job._id}`}>
-                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  <motion.button
+                    whileInView={{ x: 0 }}
+                    initial={{ x: 50 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-fit hover:bg-base-100 p-3 text-blue-400 font-medium rounded-lg"
+                  >
                     View Details
-                  </button>
+                  </motion.button>
                 </Link>
               </div>
             ))}
@@ -146,7 +161,12 @@ export default function JobTabs() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {onSiteJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
-                <div className="flex gap-3 items-center justify-between ">
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: 50 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex gap-3 items-center justify-between "
+                >
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
                       <img className="h-10 w-10" src={userImg} alt="User" />
@@ -160,15 +180,24 @@ export default function JobTabs() {
                     <p>Applied: {job?.applicantsNumber}</p>
                     <p>Deadline: {job?.applicationDeadline}</p>
                   </div>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
-                </div>
+                </motion.div>
                 <Link to={`/jobs/${job._id}`}>
-                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  <motion.button
+                    whileInView={{ x: 0 }}
+                    initial={{ x: 50 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-fit hover:bg-base-100 p-3 text-blue-400 font-medium rounded-lg"
+                  >
                     View Details
-                  </button>
+                  </motion.button>
                 </Link>
               </div>
             ))}
@@ -180,7 +209,12 @@ export default function JobTabs() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {remoteJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
-                <div className="flex gap-3 items-center justify-between ">
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: 50 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex gap-3 items-center justify-between "
+                >
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
                       <img className="h-10 w-10" src={userImg} alt="User" />
@@ -194,15 +228,24 @@ export default function JobTabs() {
                     <p>Applied: {job?.applicantsNumber}</p>
                     <p>Deadline: {job?.applicationDeadline}</p>
                   </div>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
-                </div>
+                </motion.div>
                 <Link to={`/jobs/${job._id}`}>
-                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  <motion.button
+                    whileInView={{ x: 0 }}
+                    initial={{ x: 50 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-fit hover:bg-base-100 p-3 text-blue-400 font-medium rounded-lg"
+                  >
                     View Details
-                  </button>
+                  </motion.button>
                 </Link>
               </div>
             ))}
@@ -214,7 +257,12 @@ export default function JobTabs() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {hybridJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
-                <div className="flex gap-3 items-center justify-between ">
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: 50 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex gap-3 items-center justify-between "
+                >
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
                       <img className="h-10 w-10" src={userImg} alt="User" />
@@ -228,15 +276,24 @@ export default function JobTabs() {
                     <p>Applied: {job?.applicantsNumber}</p>
                     <p>Deadline: {job?.applicationDeadline}</p>
                   </div>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
-                </div>
+                </motion.div>
                 <Link to={`/jobs/${job._id}`}>
-                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  <motion.button
+                    whileInView={{ x: 0 }}
+                    initial={{ x: 50 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-fit hover:bg-base-100 p-3 text-blue-400 font-medium rounded-lg"
+                  >
                     View Details
-                  </button>
+                  </motion.button>
                 </Link>
               </div>
             ))}
@@ -248,7 +305,12 @@ export default function JobTabs() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-5">
             {partTimeJobs.map((job) => (
               <div key={job._id} className="bg-base-300 p-4 grid gap-2 rounded-xl">
-                <div className="flex gap-3 items-center justify-between ">
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: 50 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex gap-3 items-center justify-between "
+                >
                   <div className="flex gap-3 items-center">
                     <div className="border rounded-full h-10 w-10 overflow-hidden">
                       <img className="h-10 w-10" src={userImg} alt="User" />
@@ -262,15 +324,24 @@ export default function JobTabs() {
                     <p>Applied: {job?.applicantsNumber}</p>
                     <p>Deadline: {job?.applicationDeadline}</p>
                   </div>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  whileInView={{ x: 0 }}
+                  initial={{ x: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <h2 className="text-4xl">{job.title}</h2>
                   <p>Salary Range: {job?.salaryRange}</p>
-                </div>
+                </motion.div>
                 <Link to={`/jobs/${job._id}`}>
-                  <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                  <motion.button
+                    whileInView={{ x: 0 }}
+                    initial={{ x: 50 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-fit hover:bg-base-100 p-3 text-blue-400 font-medium rounded-lg"
+                  >
                     View Details
-                  </button>
+                  </motion.button>
                 </Link>
               </div>
             ))}
