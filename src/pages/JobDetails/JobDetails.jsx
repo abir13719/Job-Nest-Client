@@ -8,13 +8,15 @@ import { isBefore, parse } from "date-fns";
 
 const fetchJobDetails = async ({ queryKey }) => {
   const [_, id] = queryKey;
-  const res = await axios.get(`http://localhost:5000/jobs/${id}`);
+  const res = await axios.get(`http://localhost:5000/jobs/${id}`, { withCredentials: true });
   return res.data;
 };
 
 const fetchAppliedStatus = async ({ queryKey }) => {
   const [_, id, email] = queryKey;
-  const res = await axios.get(`http://localhost:5000/applied/${id}/${email}`);
+  const res = await axios.get(`http://localhost:5000/applied/${id}/${email}`, {
+    withCredentials: true,
+  });
   return res.data.applied;
 };
 

@@ -15,7 +15,9 @@ const AppliedJobs = () => {
   } = useQuery({
     queryKey: ["appliedJobs", user.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/applied?email=${user.email}`);
+      const res = await axios.get(`http://localhost:5000/applied?email=${user.email}`, {
+        withCredentials: true,
+      });
       return res.data;
     },
   });
@@ -29,7 +31,8 @@ const AppliedJobs = () => {
     queryFn: async () => {
       if (selectedCategory) {
         const res = await axios.get(
-          `http://localhost:5000/applied?email=${user.email}&category=${selectedCategory}`
+          `http://localhost:5000/applied?email=${user.email}&category=${selectedCategory}`,
+          { withCredentials: true }
         );
         return res.data;
       }

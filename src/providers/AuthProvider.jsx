@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { createContext } from "react";
 import auth from "../data/firebaseConfigInIt";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
@@ -52,6 +53,19 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      if (currentUser) {
+        axios
+          .post(
+            "http://localhost:5000/authentication",
+            { email: currentUser.email },
+            { withCredentials: true }
+          )
+          .then((response) => {
+            console.log(response.data);
+          });
+      } else {
+        axios.post("http://localhost:5000/clear-cookie", null, { withCredentials: true });
+      }
     });
     return () => {
       unSubscribe();
