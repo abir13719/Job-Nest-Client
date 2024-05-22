@@ -4,6 +4,44 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+
+const JobApplicationPdf = ({ job }) => {
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: "column",
+      backgroundColor: "#E4E4E4",
+      padding: 20,
+    },
+    section: {
+      margin: 5,
+      padding: 5,
+      flexGrow: 1,
+    },
+  });
+
+  return (
+    <Document>
+      <Page style={styles.page}>
+        <View style={styles.section}>
+          <Text>Job Title: {job.title}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Posting Date: {job.postingDate}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Application Deadline: {job.applicationDeadline}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Salary: {job.salaryRange}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Description: {job.description}</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+};
 
 const MyJobs = () => {
   const { user } = useContext(AuthContext);
@@ -58,18 +96,19 @@ const MyJobs = () => {
               <th>Salary</th>
               <th></th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan="6" className="text-center font-bold">
+                <td colSpan="7" className="text-center font-bold">
                   Loading Your Jobs...
                 </td>
               </tr>
             ) : isError ? (
               <tr>
-                <td colSpan="6" className="text-center font-bold">
+                <td colSpan="7" className="text-center font-bold">
                   Error While Loading Your Jobs!
                 </td>
               </tr>
@@ -94,6 +133,24 @@ const MyJobs = () => {
                     >
                       Delete
                     </button>
+                  </th>
+                  <th>
+                    <PDFDownloadLink
+                      document={<JobApplicationPdf job={job} />}
+                      fileName={`job-${job.title}.pdf`}
+                    >
+                      {({ loading }) =>
+                        loading ? (
+                          <button className="w-fit hover:bg-base-300 p-3 text-blue-500 font-medium rounded-lg">
+                            Generating PDF...
+                          </button>
+                        ) : (
+                          <button className="w-fit hover:bg-base-300 p-3 text-blue-500 font-medium rounded-lg">
+                            Download Application
+                          </button>
+                        )
+                      }
+                    </PDFDownloadLink>
                   </th>
                 </tr>
               ))
