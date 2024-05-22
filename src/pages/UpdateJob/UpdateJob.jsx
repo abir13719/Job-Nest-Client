@@ -1,11 +1,11 @@
 import addIcon from "../../assets/add-96.png";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import DatePicker from "react-datepicker";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 
@@ -15,13 +15,14 @@ const UpdateJob = () => {
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [deadline, setDeadline] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [deadline, setDeadline] = useState(null);
 
   const fetchJob = async () => {
     const res = await axios.get(`http://localhost:5000/jobs/${jobId}`);
     return res.data;
   };
+
   const {
     data: loadedJobData,
     isLoading,
@@ -31,10 +32,20 @@ const UpdateJob = () => {
     queryFn: fetchJob,
   });
 
+  useEffect(() => {
+    if (loadedJobData) {
+      const parsedPostingDate = parse(loadedJobData.postingDate, "dd/MM/yyyy", new Date());
+      const parsedDeadline = parse(loadedJobData.applicationDeadline, "dd/MM/yyyy", new Date());
+      setStartDate(parsedPostingDate);
+      setDeadline(parsedDeadline);
+    }
+  }, [loadedJobData]);
+
   const updateJob = async (updatedJob) => {
     const res = await axios.put(`http://localhost:5000/jobs/${jobId}`, updatedJob);
     return res.data;
   };
+
   const mutation = useMutation({
     mutationFn: updateJob,
     onSuccess: () => {
@@ -74,6 +85,7 @@ const UpdateJob = () => {
         Loading Update Jobs...
       </div>
     );
+
   if (isError)
     return (
       <div className="h-screen flex items-center justify-center font-bold">
@@ -183,7 +195,6 @@ const UpdateJob = () => {
                   minDate={new Date()}
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
-                  defaultValue={loadedJobData?.postingDate}
                   dateFormat="dd/MM/yyyy"
                 />
               </div>
@@ -198,7 +209,6 @@ const UpdateJob = () => {
                   minDate={new Date()}
                   selected={deadline}
                   onChange={(date) => setDeadline(date)}
-                  defaultValue={loadedJobData?.applicationDeadline}
                   dateFormat="dd/MM/yyyy"
                 />
               </div>
