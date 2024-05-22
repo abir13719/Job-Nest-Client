@@ -1,16 +1,35 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 
-const Slider = () => {
-  const [allSliders, setAllSliders] = useState([]);
+const fetchSlider = async () => {
+  const res = await axios.get("http://localhost:5000/sliders");
+  return res.data;
+};
 
-  useEffect(() => {
-    fetch("http://localhost:5000/sliders")
-      .then((res) => res.json())
-      .then((data) => setAllSliders(data));
-  }, []);
+const Slider = () => {
+  const {
+    data: allSliders = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["sliders"],
+    queryFn: fetchSlider,
+  });
+  if (isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">Loading Sliders...</div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">
+        Error While Loading Sliders!
+      </div>
+    );
+  }
 
   return (
     <Swiper

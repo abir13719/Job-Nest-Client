@@ -1,24 +1,50 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const AppliedJobs = () => {
-  const [appliedJobs, setAppliedJobs] = useState([]);
   const { user } = useContext(AuthContext);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/applied?email=${user.email}`)
-      .then((data) => setAppliedJobs(data.data));
-  }, [user.email]);
+  const {
+    data: appliedJobs,
+    isLoading: appliedLoading,
+    isError: appliedError,
+  } = useQuery({
+    queryKey: ["appliedJobs", user.email],
+    queryFn: async () => {
+      const res = await axios.get(`http://localhost:5000/applied?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+  const {
+    data: filteredAppliedJobs,
+    isLoading: filteredLoading,
+    isError: filteredError,
+  } = useQuery({
+    queryKey: ["filteredAppliedJobs", user.email, selectedCategory],
+    queryFn: async () => {
+      if (selectedCategory) {
+        const res = await axios.get(
+          `http://localhost:5000/applied?email=${user.email}&category=${selectedCategory}`
+        );
+        return res.data;
+      }
+    },
+    enabled: !!selectedCategory,
+  });
 
   const handleCategoryChange = (e) => {
-    const catValue = e.target.value;
-    axios
-      .get(`http://localhost:5000/applied?category=${catValue}`)
-      .then((data) => setAppliedJobs(data.data));
+    const category = e.target.value;
+    setSelectedCategory(category);
   };
+
+  const jobsToRender = selectedCategory ? filteredAppliedJobs : appliedJobs;
+  const loading = selectedCategory ? filteredLoading : appliedLoading;
+  const error = selectedCategory ? filteredError : appliedError;
 
   return (
     <div className="container mx-auto">
@@ -28,9 +54,9 @@ const AppliedJobs = () => {
         <p className="text-center">Filter Jobs By Category</p>
         <form className="w-[350px] md:w-[480px] border overflow-hidden flex justify-between">
           <select
-            name="catValue"
+            name="category"
+            value={selectedCategory}
             onChange={handleCategoryChange}
-            id=""
             className="w-full p-3 border-none outline-none"
           >
             <option value="">All</option>
@@ -42,42 +68,54 @@ const AppliedJobs = () => {
         </form>
       </div>
       <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Banner</th>
-              <th>Job Title</th>
-              <th>Salary</th>
-              <th>Resume</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {appliedJobs.map((job) => (
-              <tr key={job._id}>
-                <th>
-                  <div className="h-[40px] w-[200px]">
-                    <img
-                      className="h-full w-full object-cover object-center"
-                      src={job.pictureUrl}
-                    />
-                  </div>
-                </th>
-                <td>{job.title}</td>
-                <td>{job.salaryRange}</td>
-                <td>{job.resume}</td>
-                <th>
-                  <Link to={`/jobs/${job.jobId}`}>
-                    <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                      View Details
-                    </button>
-                  </Link>
-                </th>
+        {loading && (
+          <div className="h-screen flex items-center justify-center font-bold">
+            Loading Applied Jobs...
+          </div>
+        )}
+        {error && (
+          <div className="h-screen flex items-center justify-center font-bold">
+            Error While Loading Applied Jobs!
+          </div>
+        )}
+        {!loading && !error && (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Banner</th>
+                <th>Job Title</th>
+                <th>Salary</th>
+                <th>Resume</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {jobsToRender.map((job) => (
+                <tr key={job._id}>
+                  <th>
+                    <div className="h-[40px] w-[200px]">
+                      <img
+                        className="h-full w-full object-cover object-center"
+                        src={job.pictureUrl}
+                        alt="Job Banner"
+                      />
+                    </div>
+                  </th>
+                  <td>{job.title}</td>
+                  <td>{job.salaryRange}</td>
+                  <td>{job.resume}</td>
+                  <th>
+                    <Link to={`/jobs/${job.jobId}`}>
+                      <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                        View Details
+                      </button>
+                    </Link>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

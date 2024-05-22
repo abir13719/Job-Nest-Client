@@ -10,8 +10,6 @@ const Registration = () => {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-
-    // getting form input values
     const form = e.target;
     const name = form.userName.value;
     const email = form.email.value;
@@ -19,10 +17,8 @@ const Registration = () => {
     const password = form.password.value;
     const cPassword = form.cPassword.value;
 
-    // reseting problem state
     setRegisProblem("");
 
-    // password validation
     if (password.length < 6) {
       setRegisProblem("Password must be at least 6 characters");
       return;
@@ -40,19 +36,14 @@ const Registration = () => {
       return;
     }
 
-    // creating new user
     createUser(email, password)
       .then((result) => {
-        // setting additional user information
         updateProfile(result.user, {
           displayName: name,
           photoURL: photo,
         });
 
-        // navigating to home page
         navigate("/");
-
-        // // reseting form inputs
         e.target.reset();
       })
       .catch((error) => {
@@ -98,6 +89,7 @@ const Registration = () => {
                 name="userName"
                 id="userName"
                 placeholder="Your Name"
+                required
               />
             </div>
 
@@ -107,10 +99,11 @@ const Registration = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 outline-none font-medium"
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 placeholder="Your Email"
+                required
               />
             </div>
 
@@ -120,7 +113,7 @@ const Registration = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3  outline-none font-medium"
-                type="text"
+                type="url"
                 name="userPicture"
                 id="userPicture"
                 placeholder="Your Profile URL"
@@ -133,10 +126,11 @@ const Registration = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 outline-none font-medium"
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Your Password"
+                required
               />
             </div>
             <div className="col-span-2 md:col-span-1 space-y-1">
@@ -145,10 +139,11 @@ const Registration = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 outline-none font-medium"
-                type="text"
+                type="password"
                 name="cPassword"
                 id="cPassword"
                 placeholder="Confirm Password"
+                required
               />
             </div>
 

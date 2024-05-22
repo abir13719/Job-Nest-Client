@@ -46,8 +46,8 @@ function a11yProps(index) {
 
 // Function to fetch jobs
 const fetchJobs = async () => {
-  const { data } = await axios.get("http://localhost:5000/jobs");
-  return data;
+  const res = await axios.get("http://localhost:5000/jobs");
+  return res.data;
 };
 
 export default function JobTabs() {
@@ -67,12 +67,16 @@ export default function JobTabs() {
   };
 
   if (isLoading) {
-    return <div className="h-screen flex items-center justify-center font-bold">Loading...</div>;
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">Loading Jobs...</div>
+    );
   }
 
   if (isError) {
     return (
-      <div className="h-screen flex items-center justify-center font-bold">Error loading jobs.</div>
+      <div className="h-screen flex items-center justify-center font-bold">
+        Error While loading jobs.
+      </div>
     );
   }
 

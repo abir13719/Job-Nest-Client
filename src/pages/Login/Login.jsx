@@ -11,24 +11,15 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    // getting form input values
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
 
-    // reseting problem state
     setLogInProblem("");
 
-    // logging in user
     LoginUser(email, password)
-      .then((result) => {
-        console.log("Logged in user with Email", result.user);
-
-        // navigating to home page or expected routes
+      .then(() => {
         navigate(location?.state ? location?.state : "/");
-
-        // reseting form inputs
         e.target.reset();
       })
       .catch((error) => {
@@ -39,28 +30,22 @@ const Login = () => {
   // logging in user with google account
   const handleGoogleLogin = () => {
     LoginWithGoogle()
-      .then((result) => {
-        console.log("Logged in user with Google", result.user);
-
-        // navigating to home page or expected routes
+      .then(() => {
         navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
-        console.error(error);
+        setLogInProblem(error.message.split("Error")[1].replace(/[()-.]/g, " "));
       });
   };
 
   // logging in user with github account
   const handleGithubLogin = () => {
     LoginWithGitHub()
-      .then((result) => {
-        console.log("Logged in user with Github", result.user);
-
-        // navigating to home page or expected routes
+      .then(() => {
         navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
-        console.error(error);
+        setLogInProblem(error.message.split("Error")[1].replace(/[()-.]/g, " "));
       });
   };
   return (
@@ -96,10 +81,11 @@ const Login = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 outline-none font-medium"
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 placeholder="Your Email"
+                required
               />
             </div>
 
@@ -109,10 +95,11 @@ const Login = () => {
               </label>
               <input
                 className="w-full py-3 md:py-4 px-3 outline-none font-medium"
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Your Password"
+                required
               />
             </div>
             <div className="col-span-2">

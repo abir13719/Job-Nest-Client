@@ -6,9 +6,7 @@ const Base = () => {
   return (
     <>
       <Navbar></Navbar>
-
       <Outlet></Outlet>
-
       <Footer></Footer>
     </>
   );

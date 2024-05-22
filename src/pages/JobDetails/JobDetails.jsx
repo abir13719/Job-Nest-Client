@@ -8,14 +8,14 @@ import { isBefore, parse } from "date-fns";
 
 const fetchJobDetails = async ({ queryKey }) => {
   const [_, id] = queryKey;
-  const response = await axios.get(`http://localhost:5000/jobs/${id}`);
-  return response.data;
+  const res = await axios.get(`http://localhost:5000/jobs/${id}`);
+  return res.data;
 };
 
 const fetchAppliedStatus = async ({ queryKey }) => {
   const [_, id, email] = queryKey;
-  const response = await axios.get(`http://localhost:5000/applied/${id}/${email}`);
-  return response.data.applied;
+  const res = await axios.get(`http://localhost:5000/applied/${id}/${email}`);
+  return res.data.applied;
 };
 
 const JobDetails = () => {
@@ -23,11 +23,10 @@ const JobDetails = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
 
-  const { data: jobDetails = {}, isLoading: jobLoading } = useQuery({
+  const { data: jobDetails = {}, isLoading: jobDetailsLoading } = useQuery({
     queryKey: ["jobDetails", id],
     queryFn: fetchJobDetails,
   });
-
   const { data: isApplied = false, isLoading: appliedLoading } = useQuery({
     queryKey: ["appliedStatus", id, user?.email],
     queryFn: fetchAppliedStatus,
@@ -35,6 +34,7 @@ const JobDetails = () => {
   });
 
   const [isDeadlineExpired, setIsDeadlineExpired] = useState(false);
+
   useEffect(() => {
     if (jobDetails.applicationDeadline) {
       const deadlineDate = parse(jobDetails.applicationDeadline, "dd/MM/yyyy", new Date());
@@ -42,21 +42,16 @@ const JobDetails = () => {
     }
   }, [jobDetails]);
 
-  const {
-    _id,
-    title,
-    description,
-    pictureUrl,
-    salaryRange,
-    applicantsNumber,
-    category,
-    postByEmail,
-  } = jobDetails;
-
   const mutation = useMutation({
-    mutationFn: (newApplied) =>
-      axios.post("http://localhost:5000/applied", newApplied).then((res) => res.data),
+    mutationFn: async (newApplied) => {
+      const res = await axios.post("http://localhost:5000/applied", newApplied);
+      return res.data;
+    },
     onSuccess: (data) => {
+      const modal = document.getElementById("my_modal_3");
+      if (modal) {
+        modal.close();
+      }
       if (data.insertedId) {
         Swal.fire({
           title: "Success!",
@@ -80,12 +75,12 @@ const JobDetails = () => {
   const handleApplySubmit = (e) => {
     e.preventDefault();
     const userInfo = {
-      jobId: _id,
-      title,
-      pictureUrl,
-      salaryRange,
-      category,
-      description,
+      jobId: jobDetails._id,
+      title: jobDetails.title,
+      pictureUrl: jobDetails.pictureUrl,
+      salaryRange: jobDetails.salaryRange,
+      category: jobDetails.category,
+      description: jobDetails.description,
       name: e.target.name.value,
       email: user.email,
       resume: e.target.resume.value,
@@ -93,9 +88,11 @@ const JobDetails = () => {
     mutation.mutate(userInfo);
   };
 
-  if (jobLoading || appliedLoading) {
+  if (jobDetailsLoading || appliedLoading) {
     return <div className="h-screen flex items-center justify-center font-bold">Loading...</div>;
   }
+
+  const { title, description, pictureUrl, salaryRange, applicantsNumber, postByEmail } = jobDetails;
 
   return (
     <div className="container mx-auto bg-base-200 my-5 p-5 rounded-xl">

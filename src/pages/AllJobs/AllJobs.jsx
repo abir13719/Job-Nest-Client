@@ -1,40 +1,31 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+
+const fetchAllJobs = async ({ queryKey }) => {
+  const [_, searchText] = queryKey;
+  const res = await axios.get(`http://localhost:5000/jobs?title=${searchText}`);
+  return res.data;
+};
 
 const AllJobs = () => {
-  const [allJobs, setAllJobs] = useState([]);
   const [searchTxt, setSearchTxt] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const queryClient = useQueryClient();
 
-  const fetchJobs = async (searchText = "") => {
-    setIsLoading(true);
-    setIsError(false);
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/jobs${searchText ? `?title=${searchText}` : ""}`
-      );
-      setAllJobs(response.data);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { data: allJobs = [] } = useQuery({
+    queryKey: ["allJobs", searchTxt],
+    queryFn: fetchAllJobs,
+    keepPreviousData: true,
+  });
 
   useEffect(() => {
-    if (searchTxt === "") {
-      fetchJobs();
-    } else {
-      fetchJobs(searchTxt);
-    }
-  }, [searchTxt]);
+    queryClient.invalidateQueries(["allJobs", searchTxt]);
+  }, [searchTxt, queryClient]);
 
-  const handleInputChange = (value) => {
-    setSearchTxt(value);
+  const handleInputChange = (event) => {
+    setSearchTxt(event.target.value);
   };
 
   return (
@@ -50,46 +41,41 @@ const AllJobs = () => {
             type="search"
             name="searchTxt"
             value={searchTxt}
-            onChange={(e) => handleInputChange(e.target.value)}
+            onChange={handleInputChange}
             placeholder="Search here"
           />
         </div>
       </div>
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error fetching jobs.</p>}
-      {!isLoading && !isError && (
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>Job Title</th>
-                <th>Posting Date</th>
-                <th>Deadline</th>
-                <th>Salary</th>
-                <th></th>
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Posting Date</th>
+              <th>Deadline</th>
+              <th>Salary</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {allJobs.map((job) => (
+              <tr key={job._id}>
+                <th>{job.title}</th>
+                <td>{job.postingDate}</td>
+                <td>{job.applicationDeadline}</td>
+                <td>{job.salaryRange}</td>
+                <th>
+                  <Link to={`/jobs/${job._id}`}>
+                    <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
+                      View Details
+                    </button>
+                  </Link>
+                </th>
               </tr>
-            </thead>
-            <tbody>
-              {allJobs.map((job) => (
-                <tr key={job._id}>
-                  <th>{job.title}</th>
-                  <td>{job.postingDate}</td>
-                  <td>{job.applicationDeadline}</td>
-                  <td>{job.salaryRange}</td>
-                  <th>
-                    <Link to={`/jobs/${job._id}`}>
-                      <button className="w-fit hover:bg-base-300 p-3 text-blue-400 font-medium rounded-lg">
-                        View Details
-                      </button>
-                    </Link>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

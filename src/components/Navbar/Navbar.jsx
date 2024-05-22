@@ -10,14 +10,9 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    logOut()
-      .then(() => {
-        // navigating to home page
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    logOut().then(() => {
+      navigate("/");
+    });
   };
 
   const navLinks = (
@@ -38,7 +33,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink to="/my-jobs">My Jobs</NavLink>
-          </li>{" "}
+          </li>
         </>
       )}
       <li>
@@ -49,7 +44,7 @@ const Navbar = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto h-screen flex items-center justify-center">
+      <div className="container mx-auto h-screen items-center flex justify-center">
         <span className="text-center loading loading-spinner loading-lg"></span>;
       </div>
     );
@@ -112,11 +107,6 @@ const Navbar = () => {
                   <p className="font-medium text-lg w-full">{user?.displayName}</p>
                   <p className="w-full text-sm">{user?.email}</p>
                 </div>
-              </li>
-              <li>
-                <Link className="btn text-base bg-pink-700 hover:bg-pink-600 text-violet-100 my-3">
-                  Update Profile
-                </Link>
               </li>
               <li>
                 <button

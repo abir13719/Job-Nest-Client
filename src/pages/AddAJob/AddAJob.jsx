@@ -14,8 +14,8 @@ const AddAJob = () => {
   const { user } = useContext(AuthContext);
 
   const mutation = useMutation({
-    mutationFn: (newJob) => {
-      return axios.post("http://localhost:5000/jobs", newJob).then((data) => data.data);
+    mutationFn: async (newJob) => {
+      return await axios.post("http://localhost:5000/jobs", newJob).then((data) => data.data);
     },
     onSuccess: (data) => {
       if (data.insertedId) {
@@ -39,7 +39,6 @@ const AddAJob = () => {
 
   const handleAddJob = (e) => {
     e.preventDefault();
-
     // getting form input values
     const form = e.target;
     const newJob = {
@@ -54,7 +53,6 @@ const AddAJob = () => {
       postByEmail: form.ownerEmail.value,
       description: form.description.value,
     };
-
     mutation.mutate(newJob);
     form.reset();
   };

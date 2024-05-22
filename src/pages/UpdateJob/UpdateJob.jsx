@@ -1,22 +1,57 @@
-import { useContext, useState } from "react";
 import addIcon from "../../assets/add-96.png";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
-import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UpdateJob = () => {
+  const navigate = useNavigate();
+  const { id: jobId } = useParams();
+  const { user } = useContext(AuthContext);
+  const queryClient = useQueryClient();
+
   const [startDate, setStartDate] = useState(new Date());
   const [deadline, setDeadline] = useState(new Date());
-  const { user } = useContext(AuthContext);
-  const loadedJobData = useLoaderData();
+
+  const fetchJob = async () => {
+    const res = await axios.get(`http://localhost:5000/jobs/${jobId}`);
+    return res.data;
+  };
+  const {
+    data: loadedJobData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["job", jobId],
+    queryFn: fetchJob,
+  });
+
+  const updateJob = async (updatedJob) => {
+    const res = await axios.put(`http://localhost:5000/jobs/${jobId}`, updatedJob);
+    return res.data;
+  };
+  const mutation = useMutation({
+    mutationFn: updateJob,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["job", jobId] });
+      Swal.fire({
+        title: "Success!",
+        text: "Job updated successfully",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/my-jobs");
+      });
+    },
+  });
 
   const handleUpdateJob = (e) => {
     e.preventDefault();
-
-    // getting form input values
     const form = e.target;
     const updatedJob = {
       title: form.jobTitle.value,
@@ -30,48 +65,39 @@ const UpdateJob = () => {
       postByEmail: form.ownerEmail.value,
       description: form.description.value,
     };
-
-    // Updating Database
-    fetch(`http://localhost:5000/jobs/${loadedJobData._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedJob),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.modifiedCount > 0) {
-          Swal.fire({
-            title: "Success!",
-            text: "Job updated successfully",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-        }
-      });
+    mutation.mutate(updatedJob);
   };
+
+  if (isLoading)
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">
+        Loading Update Jobs...
+      </div>
+    );
+  if (isError)
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">
+        Error While Loading Update Jobs!
+      </div>
+    );
 
   return (
     <div className="py-1 md:py-10">
       <div className="h-full container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
-        {/* Image div */}
         <div className="col-span-12 md:col-span-5 addBg">
           <div className="h-full flex flex-col items-center justify-center p-5">
-            <img className="my-2" src={addIcon} />
+            <img className="my-2" src={addIcon} alt="Update Job" />
             <h3 className="text-4xl md:text-5xl lg:text-6xl text-center font-extrabold text-violet-300">
               Update Job
             </h3>
-            <p className="p-10 text-lg md:text-xl  max-w-md text-center text-violet-100">
+            <p className="p-10 text-lg md:text-xl max-w-md text-center text-violet-100">
               Accurate and more information can make the process easy to find a skilled employee
             </p>
           </div>
         </div>
 
-        {/* Form div */}
         <div className="col-span-12 md:col-span-7 p-5 lg:p-16">
-          <form onSubmit={handleUpdateJob} className="grid grid-cols-2 gap-3 h-full ">
+          <form onSubmit={handleUpdateJob} className="grid grid-cols-2 gap-3 h-full">
             <h1 className="text-2xl md:text-3xl text-pink-600 font-bold col-span-2">
               Update Information
             </h1>
@@ -108,7 +134,7 @@ const UpdateJob = () => {
                 Job Banner
               </label>
               <input
-                className="w-full py-3 md:py-4 px-3  font-medium"
+                className="w-full py-3 md:py-4 px-3 font-medium"
                 type="url"
                 name="jobPicture"
                 id="jobPicture"

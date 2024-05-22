@@ -1,16 +1,36 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchReviews = async () => {
+  const res = await axios.get("http://localhost:5000/feedback");
+  return res.data;
+};
 
 const UserReview = () => {
-  const [reviews, setReviews] = useState([]);
+  const {
+    data: reviews = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["review"],
+    queryFn: fetchReviews,
+  });
 
-  useEffect(() => {
-    axios.get("http://localhost:5000/feedback").then((data) => setReviews(data.data));
-  }, []);
-
+  if (isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">Loading Reviews...</div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className="h-screen flex items-center justify-center font-bold">
+        Error While Loading Reviews!
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto py-4">
       <h1 className="text-center text-4xl font-bold my-5">Our Client Reviews</h1>
