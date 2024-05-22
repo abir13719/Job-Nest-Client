@@ -2,9 +2,13 @@ import accessToken from "../../assets/Access_Token.jpg";
 import refreshToken from "../../assets/Refresh_token.jpg";
 import expressJs from "../../assets/ExpressJs.jpg";
 import nestJs from "../../assets/nest-js-logo.jpg";
+import { Helmet } from "react-helmet-async";
 const Blogs = () => {
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Job Nest || Blogs</title>
+      </Helmet>
       <div className="space-y-3 my-5">
         <h1 className="text-center text-4xl font-bold ">Access and Refresh Tokens</h1>
         <p className="text-center max-w-4xl mx-auto ">

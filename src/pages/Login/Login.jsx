@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { LoginUser, LoginWithGoogle, LoginWithGitHub } = useContext(AuthContext);
@@ -50,6 +51,9 @@ const Login = () => {
   };
   return (
     <div className="py-1 md:py-10">
+      <Helmet>
+        <title>Job Nest || Login</title>
+      </Helmet>
       <div className="h-full md:h-[560px] container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
         {/* Image div */}
         <div className="col-span-12 md:col-span-5 sideBg">

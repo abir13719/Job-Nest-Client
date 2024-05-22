@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { isBefore, parse } from "date-fns";
+import { Helmet } from "react-helmet-async";
 
 const fetchJobDetails = async ({ queryKey }) => {
   const [_, id] = queryKey;
@@ -98,6 +99,9 @@ const JobDetails = () => {
 
   return (
     <div className="container mx-auto bg-base-200 my-5 p-5 rounded-xl">
+      <Helmet>
+        <title>Job Nest || Job Details</title>
+      </Helmet>
       <div>
         <img
           className="h-[70vh] w-full rounded-xl object-cover object-center"

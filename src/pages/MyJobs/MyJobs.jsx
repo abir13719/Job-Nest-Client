@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Helmet } from "react-helmet-async";
 
 const JobApplicationPdf = ({ job }) => {
   const styles = StyleSheet.create({
@@ -85,6 +86,9 @@ const MyJobs = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Job Nest || My Jobs</title>
+      </Helmet>
       <h1 className="text-center text-4xl font-bold my-5">Your Jobs To Find Employee</h1>
       <div className="overflow-x-auto">
         <table className="table">

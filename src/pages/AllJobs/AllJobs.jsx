@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 const fetchAllJobs = async ({ queryKey }) => {
   const [_, searchText] = queryKey;
@@ -30,6 +31,9 @@ const AllJobs = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Job Nest || All Jobs</title>
+      </Helmet>
       <h1 className="text-center text-4xl font-bold my-5">Find Your Dream Job</h1>
       <div className="flex justify-center my-5">
         <div className="w-[350px] md:w-[480px] p-3 border rounded-full overflow-hidden flex items-center gap-2">

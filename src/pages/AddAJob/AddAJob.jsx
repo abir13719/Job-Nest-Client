@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const AddAJob = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -59,6 +60,9 @@ const AddAJob = () => {
 
   return (
     <div className="py-1 md:py-10">
+      <Helmet>
+        <title>Job Nest || Add Job</title>
+      </Helmet>
       <div className="h-full container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
         {/* Image div */}
         <div className="col-span-12 md:col-span-5 addBg">

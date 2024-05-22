@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const AppliedJobs = () => {
   const { user } = useContext(AuthContext);
@@ -51,7 +52,9 @@ const AppliedJobs = () => {
 
   return (
     <div className="container mx-auto">
-      <p></p>
+      <Helmet>
+        <title>Job Nest || Applied Jobs</title>
+      </Helmet>
       <h1 className="text-center text-4xl font-bold my-5">Jobs You Have Applied</h1>
       <div className="flex flex-col items-center justify-center my-5">
         <p className="text-center">Filter Jobs By Category</p>

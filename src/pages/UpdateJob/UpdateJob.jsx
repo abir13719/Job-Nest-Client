@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import { format, parse } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const UpdateJob = () => {
   const navigate = useNavigate();
@@ -95,6 +96,9 @@ const UpdateJob = () => {
 
   return (
     <div className="py-1 md:py-10">
+      <Helmet>
+        <title>Job Nest || Update Job</title>
+      </Helmet>
       <div className="h-full container mx-auto grid grid-cols-12 bg-base-200 rounded-none md:rounded-3xl overflow-hidden">
         <div className="col-span-12 md:col-span-5 addBg">
           <div className="h-full flex flex-col items-center justify-center p-5">
