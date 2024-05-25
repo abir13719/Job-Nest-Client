@@ -1,8 +1,50 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# JobNest
 
-Currently, two official plugins are available:
+This is a Job huntting selling website. It it made with react js and used the following libraries:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Live [Link](https://job-nest-5890c.web.app/) here.
+
+* [Axios](https://axios-http.com/docs/intro)
+* [daisyUI](https://daisyui.com/)
+* [Firebase](https://firebase.google.com/)
+* [Framer-Motion](https://www.framer.com/motion/)
+* [Material-Ui](https://mui.com/material-ui/)
+* [React Datepicker](https://www.npmjs.com/package/react-datepicker)
+* [React Helmet Async](https://www.npmjs.com/package/react-helmet-async)
+* [React Icons](https://react-icons.github.io/react-icons/)
+* [React Router DOM](https://reactrouter.com/en/main)
+* [React/TanStackQuery Query](https://tanstack.com/query/v3)
+* [React to PDF](https://www.npmjs.com/package/react-to-pdf)
+* [SweetAlert2](https://sweetalert2.github.io/)
+* [SwiperJS](https://swiperjs.com/)
+* [Tailwind CSS](https://tailwindcss.com/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+   ,
+  
+
+
+
+
+
+
+
+
