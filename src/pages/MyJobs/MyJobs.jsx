@@ -48,7 +48,9 @@ const MyJobs = () => {
   const { user } = useContext(AuthContext);
 
   const fetchJobs = async () => {
-    const response = await axios.get(`http://localhost:5000/jobs?postByEmail=${user?.email}`);
+    const response = await axios.get(
+      `https://job-nest-server-seven.vercel.app/jobs?postByEmail=${user?.email}`
+    );
     return response.data;
   };
 
@@ -74,7 +76,7 @@ const MyJobs = () => {
       confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/jobs/${_id}`).then((res) => {
+        axios.delete(`https://job-nest-server-seven.vercel.app/jobs/${_id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             Swal.fire("Deleted!", "Your job has been deleted.", "success");
             refetch();

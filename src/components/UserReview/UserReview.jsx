@@ -5,7 +5,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchReviews = async () => {
-  const res = await axios.get("http://localhost:5000/feedback");
+  const res = await axios.get("https://job-nest-server-seven.vercel.app/feedback");
   return res.data;
 };
 

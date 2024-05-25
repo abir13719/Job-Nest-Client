@@ -16,7 +16,9 @@ const AddAJob = () => {
 
   const mutation = useMutation({
     mutationFn: async (newJob) => {
-      return await axios.post("http://localhost:5000/jobs", newJob).then((data) => data.data);
+      return await axios
+        .post("https://job-nest-server-seven.vercel.app/jobs", newJob)
+        .then((data) => data.data);
     },
     onSuccess: (data) => {
       if (data.insertedId) {

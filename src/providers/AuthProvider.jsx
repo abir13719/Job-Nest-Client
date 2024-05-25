@@ -54,17 +54,15 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
       if (currentUser) {
-        axios
-          .post(
-            "http://localhost:5000/authentication",
-            { email: currentUser.email },
-            { withCredentials: true }
-          )
-          .then((response) => {
-            console.log(response.data);
-          });
+        axios.post(
+          "https://job-nest-server-seven.vercel.app/authentication",
+          { email: currentUser.email },
+          { withCredentials: true }
+        );
       } else {
-        axios.post("http://localhost:5000/clear-cookie", null, { withCredentials: true });
+        axios.post("https://job-nest-server-seven.vercel.app/clear-cookie", null, {
+          withCredentials: true,
+        });
       }
     });
     return () => {

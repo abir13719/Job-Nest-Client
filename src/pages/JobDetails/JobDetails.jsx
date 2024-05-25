@@ -9,13 +9,15 @@ import { Helmet } from "react-helmet-async";
 
 const fetchJobDetails = async ({ queryKey }) => {
   const [_, id] = queryKey;
-  const res = await axios.get(`http://localhost:5000/jobs/${id}`, { withCredentials: true });
+  const res = await axios.get(`https://job-nest-server-seven.vercel.app/jobs/${id}`, {
+    withCredentials: true,
+  });
   return res.data;
 };
 
 const fetchAppliedStatus = async ({ queryKey }) => {
   const [_, id, email] = queryKey;
-  const res = await axios.get(`http://localhost:5000/applied/${id}/${email}`, {
+  const res = await axios.get(`https://job-nest-server-seven.vercel.app/applied/${id}/${email}`, {
     withCredentials: true,
   });
   return res.data.applied;
@@ -47,7 +49,7 @@ const JobDetails = () => {
 
   const mutation = useMutation({
     mutationFn: async (newApplied) => {
-      const res = await axios.post("http://localhost:5000/applied", newApplied);
+      const res = await axios.post("https://job-nest-server-seven.vercel.app/applied", newApplied);
       return res.data;
     },
     onSuccess: (data) => {

@@ -47,7 +47,7 @@ function a11yProps(index) {
 
 // Function to fetch jobs
 const fetchJobs = async () => {
-  const res = await axios.get("http://localhost:5000/jobs");
+  const res = await axios.get("https://job-nest-server-seven.vercel.app/jobs");
   return res.data;
 };
 

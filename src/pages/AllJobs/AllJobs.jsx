@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 
 const fetchAllJobs = async ({ queryKey }) => {
   const [_, searchText] = queryKey;
-  const res = await axios.get(`http://localhost:5000/jobs?title=${searchText}`);
+  const res = await axios.get(`https://job-nest-server-seven.vercel.app/jobs?title=${searchText}`);
   return res.data;
 };
 

@@ -16,9 +16,12 @@ const AppliedJobs = () => {
   } = useQuery({
     queryKey: ["appliedJobs", user.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/applied?email=${user.email}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `https://job-nest-server-seven.vercel.app/applied?email=${user.email}`,
+        {
+          withCredentials: true,
+        }
+      );
       return res.data;
     },
   });
@@ -32,7 +35,7 @@ const AppliedJobs = () => {
     queryFn: async () => {
       if (selectedCategory) {
         const res = await axios.get(
-          `http://localhost:5000/applied?email=${user.email}&category=${selectedCategory}`,
+          `https://job-nest-server-seven.vercel.app/applied?email=${user.email}&category=${selectedCategory}`,
           { withCredentials: true }
         );
         return res.data;

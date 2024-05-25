@@ -20,7 +20,7 @@ const UpdateJob = () => {
   const [deadline, setDeadline] = useState(null);
 
   const fetchJob = async () => {
-    const res = await axios.get(`http://localhost:5000/jobs/${jobId}`);
+    const res = await axios.get(`https://job-nest-server-seven.vercel.app/jobs/${jobId}`);
     return res.data;
   };
 
@@ -43,7 +43,10 @@ const UpdateJob = () => {
   }, [loadedJobData]);
 
   const updateJob = async (updatedJob) => {
-    const res = await axios.put(`http://localhost:5000/jobs/${jobId}`, updatedJob);
+    const res = await axios.put(
+      `https://job-nest-server-seven.vercel.app/jobs/${jobId}`,
+      updatedJob
+    );
     return res.data;
   };
 

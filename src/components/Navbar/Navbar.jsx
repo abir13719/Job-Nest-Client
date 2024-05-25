@@ -3,6 +3,7 @@ import DarkMode from "./DarkMode/DarkMode";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import defaultUserImage from "../../assets/user.png";
+import logo from "../../assets/logo.png";
 
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
@@ -79,7 +80,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="flex items-center pr-2 rounded-lg cursor-pointer">
-          <img className="w-14 h-14" src="/public/logo.png" />
+          <img className="w-14 h-14" src={logo} />
           <h1 className="text-xl ml-[-10px] font-bold text-cyan-700">obNest</h1>
         </Link>
       </div>

@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 
 const fetchSlider = async () => {
-  const res = await axios.get("http://localhost:5000/sliders");
+  const res = await axios.get("https://job-nest-server-seven.vercel.app/sliders");
   return res.data;
 };
 

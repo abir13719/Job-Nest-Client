@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -42,7 +43,7 @@ const Footer = () => {
         </footer>
         <footer className="footer gap-2 container mx-auto px-6 md:px-0 py-4 border-t  text-base-content border-base-100">
           <aside className="items-center grid-flow-col">
-            <img className="h-20 w-20 object-cover ml-[-10px]" src="/public/logo.png" />
+            <img className="h-20 w-20 object-cover ml-[-10px]" src={logo} />
             <div>
               <h1 className="text-2xl font-bold text-cyan-700">JobNest Ltd.</h1>
               <p className="font-medium">Where careers take flight.</p>
