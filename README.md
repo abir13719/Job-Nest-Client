@@ -5,6 +5,8 @@ This is a Job huntting selling website. It it made with react js and used the fo
 
 Live [Link](https://job-nest-5890c.web.app/) here.
 
+Backedn [Link](https://github.com/abir13719/Job-Nest-Server) here.
+
 * [Axios](https://axios-http.com/docs/intro)
 * [daisyUI](https://daisyui.com/)
 * [Firebase](https://firebase.google.com/)
